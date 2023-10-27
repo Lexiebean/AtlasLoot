@@ -677,6 +677,10 @@ GetSpellInfoVanillaDB = {
 			["name"] = "Enchant Gloves - Nature Power",
 			["icon"] = "Interface\\Icons\\Spell_Holy_GreaterHeal",
 		},
+		[46086] = { 
+			["name"] = "Enchant Gloves - Major Strength",
+			["icon"] = "Interface\\Icons\\Spell_Holy_GreaterHeal",
+		},
 		[57146] = {
 			["name"] = "Enchant Bracer - Vampirism",
 			["icon"] = "Interface\\Icons\\Spell_Holy_GreaterHeal",

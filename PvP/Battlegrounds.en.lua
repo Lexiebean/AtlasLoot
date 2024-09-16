@@ -703,8 +703,8 @@ AtlasLoot_Data["AtlasLootBGItems"] = {
 	};
 	WSGRepFriendly = {
 		{ 0, "", "", "" },
-		{ 0, "", "", "" },
 		{ 0, "INV_BannerPVP_02", "=q8=#m7#", "=q7=#b3#" },
+		{ 0, "", "", "" },
 		{ 21566, "INV_Misc_Rune_05", "=q3=Rune of Perfection", "=ds=#s14# =q9=#c5#=ds=, =q15=#c7#=ds=, =q10=#c3#=ds=, =q11=#c8#=ds=, =q13=#c1#" },
 		{ 21565, "INV_Misc_Rune_05", "=q3=Rune of Perfection", "=ds=#s14# =q9=#c5#=ds=, =q15=#c7#=ds=, =q10=#c3#=ds=, =q11=#c8#=ds=, =q13=#c1#" },
 		{ 0, "", "", "" },
@@ -718,8 +718,8 @@ AtlasLoot_Data["AtlasLootBGItems"] = {
 		{ 17349, "INV_Potion_39", "=q1=Superior Healing Draught", "=ds=#e1#" },
 		{ 17352, "INV_Potion_81", "=q1=Superior Mana Draught", "=ds=#e1#" },
 		{ 0, "", "", "" },
-		{ 0, "", "", "" },
 		{ 0, "INV_BannerPVP_01", "=q6=#m6#", "=q5=#b4#" },
+		{ 0, "", "", "" },
 		{ 21566, "INV_Misc_Rune_05", "=q3=Rune of Perfection", "=ds=#s14# =q9=#c5#=ds=, =q15=#c7#=ds=, =q10=#c3#=ds=, =q11=#c8#=ds=, =q13=#c1#" },
 		{ 21565, "INV_Misc_Rune_05", "=q3=Rune of Perfection", "=ds=#s14# =q9=#c5#=ds=, =q15=#c7#=ds=, =q10=#c3#=ds=, =q11=#c8#=ds=, =q13=#c1#" },
 		{ 0, "", "", "" },

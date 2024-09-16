@@ -10,6 +10,8 @@ function AtlasLootSetMenu()
 		getglobal("AtlasLootMenuItem_"..i):Hide();
 		getglobal("AtlasLootMenuItem_"..i).isheader = false;
 	end
+	AtlasLootCharDB.LastBoss = "SETMENU"
+	AtlasLootCharDB.LastBossText = "Collections"
 	getglobal("AtlasLootItemsFrame_BACK"):Hide();
 	getglobal("AtlasLootItemsFrame_NEXT"):Hide();
 	getglobal("AtlasLootItemsFrame_PREV"):Hide();
@@ -17,19 +19,19 @@ function AtlasLootSetMenu()
 	--ZG
 	AtlasLootMenuItem_3_Name:SetText(AL["Zul'Gurub Sets"]);
 	AtlasLootMenuItem_3_Extra:SetText("");
-	AtlasLootMenuItem_3_Icon:SetTexture("Interface\\Icons\\INV_Jewelry_Necklace_19");
+	AtlasLootMenuItem_3_Icon:SetTexture("Interface\\Icons\\INV_Sword_55");
 	AtlasLootMenuItem_3.lootpage="ZGSET";
 	AtlasLootMenuItem_3:Show();
 	--AQ20
 	AtlasLootMenuItem_4_Name:SetText(AL["Ruins of Ahn'Qiraj Sets"]);
 	AtlasLootMenuItem_4_Extra:SetText("");
-	AtlasLootMenuItem_4_Icon:SetTexture("Interface\\Icons\\INV_Jewelry_Ring_AhnQiraj_03");
+	AtlasLootMenuItem_4_Icon:SetTexture("Interface\\Icons\\INV_Axe_15");
 	AtlasLootMenuItem_4.lootpage="AQ20SET";
 	AtlasLootMenuItem_4:Show();
 	--AQ40
 	AtlasLootMenuItem_5_Name:SetText(AL["Temple of Ahn'Qiraj Sets"]);
 	AtlasLootMenuItem_5_Extra:SetText("");
-	AtlasLootMenuItem_5_Icon:SetTexture("Interface\\Icons\\INV_Sword_59");
+	AtlasLootMenuItem_5_Icon:SetTexture("Interface\\Icons\\INV_Shoulder_35");
 	AtlasLootMenuItem_5.lootpage="AQ40SET";
 	AtlasLootMenuItem_5:Show();
 	--Legendaries
@@ -39,11 +41,13 @@ function AtlasLootSetMenu()
 	AtlasLootMenuItem_7.lootpage="Legendaries";
 	AtlasLootMenuItem_7:Show();
 	--Artifacts
+	--[[
 	AtlasLootMenuItem_8_Name:SetText(AL["Artifact Items"]);
 	AtlasLootMenuItem_8_Extra:SetText("");
 	AtlasLootMenuItem_8_Icon:SetTexture("Interface\\Icons\\INV_Sword_07");
 	AtlasLootMenuItem_8.lootpage="Artifacts";
 	AtlasLootMenuItem_8:Show();
+	]]
 	--Rare Pets
 	AtlasLootMenuItem_9_Name:SetText(AL["Rare Pets"]);
 	AtlasLootMenuItem_9_Extra:SetText("");
@@ -56,26 +60,14 @@ function AtlasLootSetMenu()
 	AtlasLootMenuItem_10_Icon:SetTexture("Interface\\Icons\\INV_Misc_QirajiCrystal_05");
 	AtlasLootMenuItem_10.lootpage="RareMounts";
 	AtlasLootMenuItem_10:Show();
-	--Old Mounts
-	AtlasLootMenuItem_11_Name:SetText(AL["Old Mounts"]);
-	AtlasLootMenuItem_11_Extra:SetText("");
-	AtlasLootMenuItem_11_Icon:SetTexture("Interface\\Icons\\Ability_Mount_RidingHorse");
-	AtlasLootMenuItem_11.lootpage="OldMounts";
-	AtlasLootMenuItem_11:Show();
-	--Unobtainable Mounts
-	AtlasLootMenuItem_12_Name:SetText(AL["Unobtainable Mounts"]);
-	AtlasLootMenuItem_12_Extra:SetText("");
-	AtlasLootMenuItem_12_Icon:SetTexture("Interface\\Icons\\Ability_Mount_Whitetiger");
-	AtlasLootMenuItem_12.lootpage="UnobMounts";
-	AtlasLootMenuItem_12:Show();
-	--Tabards
-	AtlasLootMenuItem_13_Name:SetText(AL["Tabards"]);
-	AtlasLootMenuItem_13_Extra:SetText("");
-	AtlasLootMenuItem_13_Icon:SetTexture("Interface\\Icons\\INV_Shirt_GuildTabard_01");
-	AtlasLootMenuItem_13.lootpage="Tabards";
-	AtlasLootMenuItem_13:Show();
-	--World Epics
-	AtlasLootMenuItem_2_Name:SetText(AL["Pre 60 Sets"]);
+	-- Fashion
+	AtlasLootMenuItem_24_Name:SetText(AL["Fashion"]);
+	AtlasLootMenuItem_24_Extra:SetText("");
+	AtlasLootMenuItem_24_Icon:SetTexture("Interface\\Icons\\Ability_Hunter_Pet_Turtle");
+	AtlasLootMenuItem_24.lootpage="DonationRewards2";
+	AtlasLootMenuItem_24:Show();
+	--Sets
+	AtlasLootMenuItem_2_Name:SetText(AL["Sets"]);
 	AtlasLootMenuItem_2_Extra:SetText("");
 	AtlasLootMenuItem_2_Icon:SetTexture("Interface\\Icons\\INV_Sword_43");
 	AtlasLootMenuItem_2.lootpage="PRE60SET";
@@ -83,31 +75,50 @@ function AtlasLootSetMenu()
 	--World Epics
 	AtlasLootMenuItem_22_Name:SetText(AL["World Epics"]);
 	AtlasLootMenuItem_22_Extra:SetText("");
-	AtlasLootMenuItem_22_Icon:SetTexture("Interface\\Icons\\INV_Box_04");
+	AtlasLootMenuItem_22_Icon:SetTexture("Interface\\Icons\\INV_Gauntlets_30");
 	AtlasLootMenuItem_22.lootpage="WORLDEPICS";
 	AtlasLootMenuItem_22:Show();
+	--Old Mounts
+	--[[
+	AtlasLootMenuItem_23_Name:SetText(AL["Old Mounts"]);
+	AtlasLootMenuItem_23_Extra:SetText("");
+	AtlasLootMenuItem_23_Icon:SetTexture("Interface\\Icons\\Ability_Mount_RidingHorse");
+	AtlasLootMenuItem_23.lootpage="OldMounts";
+	AtlasLootMenuItem_23:Show();
+	--Unobtainable Mounts
+	AtlasLootMenuItem_24_Name:SetText(AL["Unobtainable Mounts"]);
+	AtlasLootMenuItem_24_Extra:SetText("");
+	AtlasLootMenuItem_24_Icon:SetTexture("Interface\\Icons\\Ability_Mount_Whitetiger");
+	AtlasLootMenuItem_24.lootpage="UnobMounts";
+	AtlasLootMenuItem_24:Show();]]
+	--Tabards
+	AtlasLootMenuItem_25_Name:SetText(AL["Tabards"]);
+	AtlasLootMenuItem_25_Extra:SetText("");
+	AtlasLootMenuItem_25_Icon:SetTexture("Interface\\Icons\\INV_Shirt_GuildTabard_01");
+	AtlasLootMenuItem_25.lootpage="Tabards";
+	AtlasLootMenuItem_25:Show();
 	--Dungeon Set 1/2
 	AtlasLootMenuItem_17_Name:SetText(AL["Dungeon 1/2 Sets"]);
 	AtlasLootMenuItem_17_Extra:SetText("");
-	AtlasLootMenuItem_17_Icon:SetTexture("Interface\\Icons\\INV_Chest_Chain_03");
+	AtlasLootMenuItem_17_Icon:SetTexture("Interface\\Icons\\INV_Helmet_24");
 	AtlasLootMenuItem_17.lootpage="T0SET";
 	AtlasLootMenuItem_17:Show();
 	--Tier 1
 	AtlasLootMenuItem_18_Name:SetText(AL["Tier 1 Sets"]);
 	AtlasLootMenuItem_18_Extra:SetText("");
-	AtlasLootMenuItem_18_Icon:SetTexture("Interface\\Icons\\INV_Pants_Mail_03");
+	AtlasLootMenuItem_18_Icon:SetTexture("Interface\\Icons\\INV_Helmet_09");
 	AtlasLootMenuItem_18.lootpage="T1SET";
 	AtlasLootMenuItem_18:Show();
 	--Tier 2
 	AtlasLootMenuItem_19_Name:SetText(AL["Tier 2 Sets"]);
 	AtlasLootMenuItem_19_Extra:SetText("");
-	AtlasLootMenuItem_19_Icon:SetTexture("Interface\\Icons\\INV_Shoulder_32");
+	AtlasLootMenuItem_19_Icon:SetTexture("Interface\\Icons\\INV_Helmet_74");
 	AtlasLootMenuItem_19.lootpage="T2SET";
 	AtlasLootMenuItem_19:Show();
 	--Tier 3
 	AtlasLootMenuItem_20_Name:SetText(AL["Tier 3 Sets"]);
 	AtlasLootMenuItem_20_Extra:SetText("");
-	AtlasLootMenuItem_20_Icon:SetTexture("Interface\\Icons\\INV_Chest_Plate02");
+	AtlasLootMenuItem_20_Icon:SetTexture("Interface\\Icons\\INV_Helmet_58");
 	AtlasLootMenuItem_20.lootpage="T3SET";
 	AtlasLootMenuItem_20:Show();
 	for i = 1, 30, 1 do
@@ -246,24 +257,6 @@ function AtlasLootPRE60SetMenu()
 	AtlasLootMenuItem_18_Icon:SetTexture("Interface\\Icons\\INV_Sword_43");
 	AtlasLootMenuItem_18.lootpage="DalRend";
 	AtlasLootMenuItem_18:Show();
-	--Zul'Gurub Rings
-	AtlasLootMenuItem_19_Name:SetText(AL["Zul'Gurub Rings"]);
-	AtlasLootMenuItem_19_Extra:SetText(ORANGE..AL["Zul'Gurub"]);
-	AtlasLootMenuItem_19_Icon:SetTexture("Interface\\Icons\\INV_Bijou_Orange");
-	AtlasLootMenuItem_19.lootpage="ZGRings";
-	AtlasLootMenuItem_19:Show();
-	--Primal Blessing
-	AtlasLootMenuItem_20_Name:SetText(AL["Primal Blessing"]);
-	AtlasLootMenuItem_20_Extra:SetText(ORANGE..AL["Zul'Gurub"]);
-	AtlasLootMenuItem_20_Icon:SetTexture("Interface\\Icons\\INV_Weapon_Hand_01");
-	AtlasLootMenuItem_20.lootpage="PrimalBlessing";
-	AtlasLootMenuItem_20:Show();
-	--The Twin Blades of Hakkari
-	AtlasLootMenuItem_21_Name:SetText(AL["The Twin Blades of Hakkari"]);
-	AtlasLootMenuItem_21_Extra:SetText(ORANGE..AL["Zul'Gurub"]);
-	AtlasLootMenuItem_21_Icon:SetTexture("Interface\\Icons\\INV_Sword_55");
-	AtlasLootMenuItem_21.lootpage="HakkariBlades";
-	AtlasLootMenuItem_21:Show();
 	--Shard of the Gods
 	AtlasLootMenuItem_22_Name:SetText(AL["Shard of the Gods"]);
 	AtlasLootMenuItem_22_Extra:SetText(ORANGE..AL["Various Locations"]);
@@ -276,10 +269,11 @@ function AtlasLootPRE60SetMenu()
 	AtlasLootMenuItem_23_Icon:SetTexture("Interface\\Icons\\INV_Misc_MonsterClaw_04");
 	AtlasLootMenuItem_23.lootpage="SpiritofEskhandar";
 	AtlasLootMenuItem_23:Show();
+
 	for i = 1, 30, 1 do
 		getglobal("AtlasLootMenuItem_"..i.."_Extra"):Show();
 	end
-	AtlasLoot_BossName:SetText("|cffFFFFFF"..AL["Pre 60 Sets"]);
+	AtlasLoot_BossName:SetText("|cffFFFFFF"..AL["Sets"]);
 	AtlasLoot_SetItemInfoFrame(AtlasLoot_AnchorFrame);
 end
 
@@ -350,6 +344,26 @@ function AtlasLootZGSetMenu()
 	AtlasLootMenuItem_21_Icon:SetTexture("Interface\\Icons\\INV_Shield_05");
 	AtlasLootMenuItem_21.lootpage="ZGWarrior";
 	AtlasLootMenuItem_21:Show();
+	--Zul'Gurub Rings
+	AtlasLootMenuItem_23_Name:SetText(AL["Zul'Gurub Rings"]);
+	AtlasLootMenuItem_23_Extra:SetText("");
+	AtlasLootMenuItem_23_Icon:SetTexture("Interface\\Icons\\INV_Bijou_Orange");
+	AtlasLootMenuItem_23.lootpage="ZGRings";
+	AtlasLootMenuItem_23:Show();
+	--Primal Blessing
+	AtlasLootMenuItem_24_Name:SetText(AL["Primal Blessing"]);
+	AtlasLootMenuItem_24_Extra:SetText("");
+	AtlasLootMenuItem_24_Icon:SetTexture("Interface\\Icons\\INV_Weapon_Hand_01");
+	AtlasLootMenuItem_24.lootpage="PrimalBlessing";
+	AtlasLootMenuItem_24:Show();
+	--The Twin Blades of Hakkari
+	AtlasLootMenuItem_25_Name:SetText(AL["The Twin Blades of Hakkari"]);
+	AtlasLootMenuItem_25_Extra:SetText("");
+	AtlasLootMenuItem_25_Icon:SetTexture("Interface\\Icons\\INV_Sword_55");
+	AtlasLootMenuItem_25.lootpage="HakkariBlades";
+	AtlasLootMenuItem_25:Show();
+
+
 	for i = 1, 30, 1 do
 		getglobal("AtlasLootMenuItem_"..i.."_Extra"):Show();
 	end

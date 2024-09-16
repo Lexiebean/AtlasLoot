@@ -10,6 +10,8 @@ function AtlasLootWorldEventMenu()
 		getglobal("AtlasLootMenuItem_"..i):Hide();
 		getglobal("AtlasLootMenuItem_"..i).isheader = false;
 	end
+	AtlasLootCharDB.LastBoss = "WORLDEVENTMENU"
+	AtlasLootCharDB.LastBossText = "World Events"
 	getglobal("AtlasLootItemsFrame_NEXT"):Hide();
 	getglobal("AtlasLootItemsFrame_PREV"):Hide();
 	getglobal("AtlasLootItemsFrame_BACK"):Hide();
@@ -17,13 +19,13 @@ function AtlasLootWorldEventMenu()
 	--Abyssal Council
 	AtlasLootMenuItem_2_Name:SetText(AL["Abyssal Council"]);
 	AtlasLootMenuItem_2_Extra:SetText(ORANGE..AL["Silithus"]);
-	AtlasLootMenuItem_2_Icon:SetTexture("Interface\\Icons\\Spell_Nature_TimeStop");
-	AtlasLootMenuItem_2.lootpage="AbyssalCouncil";
+	AtlasLootMenuItem_2_Icon:SetTexture("Interface\\Icons\\INV_Staff_13");
+	AtlasLootMenuItem_2.lootpage="AbyssalTemplars";
 	AtlasLootMenuItem_2:Show();
 	--Elemental Invasion
 	AtlasLootMenuItem_3_Name:SetText(AL["Elemental Invasion"]);
 	AtlasLootMenuItem_3_Extra:SetText(ORANGE..AL["Various Locations"]);
-	AtlasLootMenuItem_3_Icon:SetTexture("Interface\\Icons\\INV_Ammo_FireTar");
+	AtlasLootMenuItem_3_Icon:SetTexture("Interface\\Icons\\Spell_Fire_Elemental_Totem");
 	AtlasLootMenuItem_3.lootpage="ElementalInvasion";
 	AtlasLootMenuItem_3:Show();
 	--Children's Week
@@ -65,7 +67,7 @@ function AtlasLootWorldEventMenu()
 	--Midsummer Fire Festival
 	AtlasLootMenuItem_21_Name:SetText(AL["Midsummer Fire Festival"]);
 	AtlasLootMenuItem_21_Extra:SetText(ORANGE..AL["Various Locations"]);
-	AtlasLootMenuItem_21_Icon:SetTexture("Interface\\Icons\\INV_SummerFest_FireFlower");
+	AtlasLootMenuItem_21_Icon:SetTexture("Interface\\Icons\\INV_SummerFest_Symbol_Medium");
 	AtlasLootMenuItem_21.lootpage="MidsummerFestival";
 	AtlasLootMenuItem_21:Show();
 	--Noblegarden
@@ -77,7 +79,7 @@ function AtlasLootWorldEventMenu()
 	--Gurubashi Arena Booty Run
 	AtlasLootMenuItem_4_Name:SetText(AL["Gurubashi Arena Booty Run"]);
 	AtlasLootMenuItem_4_Extra:SetText(ORANGE..AL["Stranglethorn Vale"]);
-	AtlasLootMenuItem_4_Icon:SetTexture("Interface\\Icons\\INV_Box_02");
+	AtlasLootMenuItem_4_Icon:SetTexture("Interface\\Icons\\INV_Misc_ArmorKit_04");
 	AtlasLootMenuItem_4.lootpage="GurubashiArena";
 	AtlasLootMenuItem_4:Show();
 	--Scourge Invasion

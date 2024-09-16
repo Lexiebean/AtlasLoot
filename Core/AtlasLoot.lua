@@ -68,8 +68,8 @@ local AL = AceLibrary("AceLocale-2.2"):new("AtlasLoot");
 
 --Establish version number and compatible version of Atlas
 local VERSION_MAJOR = "1";
-local VERSION_MINOR = "1";
-local VERSION_BOSSES = "3";
+local VERSION_MINOR = "2";
+local VERSION_BOSSES = "5";
 ATLASLOOT_VERSION = "|cffFF8400AtlasLoot TW Edition v"..VERSION_MAJOR.."."..VERSION_MINOR.."."..VERSION_BOSSES.."|r";
 ATLASLOOT_CURRENT_ATLAS = "1.12.0";
 ATLASLOOT_PREVIEW_ATLAS = "1.12.1";
@@ -166,6 +166,8 @@ local DefaultAtlasLootOptions = {
 };
 
 AtlasLoot_MenuList = {
+	"DUNGEONSMENU1",
+	"DUNGEONSMENU2",
 	"PVPMENU",
 	"ABRepMenu",
 	"AVRepMenu",
@@ -184,7 +186,6 @@ AtlasLoot_MenuList = {
 	"WORLDEPICS",
 	"REPMENU",
 	"WORLDEVENTMENU",
-	"AbyssalCouncil",
 	"ALCHEMYMENU",
 	"CRAFTINGMENU",
 	"SMITHINGMENU",
@@ -195,7 +196,8 @@ AtlasLoot_MenuList = {
 	"TAILORINGMENU",
 	"CRAFTSET",
 	"COOKINGMENU",
-	"SURVIVALMENU",
+	"WORLDBOSSMENU"
+	--"AbyssalCouncil",
 };
 
 --entrance maps to instance maps NOT NEEDED FOR ATLAS 1.12
@@ -252,12 +254,12 @@ function AtlasLootDefaultFrame_OnShow()
 	--Set the item table to the loot table
 	AtlasLoot_SetItemInfoFrame(pFrame);
 	--Show the last displayed loot table
-	if AtlasLoot_IsLootTableAvailable(AtlasLootCharDB.LastBoss) then
+	--if AtlasLoot_IsLootTableAvailable(AtlasLootCharDB.LastBoss) then
 		AtlasLoot_ShowBossLoot(AtlasLootCharDB.LastBoss, AtlasLootCharDB.LastBossText, pFrame);
 		--AtlasLoot_HewdropSubMenuRegister(AtlasLootCharDB.LastBoss);
-	else
-		AtlasLoot_ShowBossLoot("EmptyInstance", AL["AtlasLoot"], pFrame);
-	end
+	--else
+		--AtlasLoot_ShowBossLoot("EmptyInstance", AL["AtlasLoot"], pFrame);
+	--end
 end
 
 --[[
@@ -289,6 +291,7 @@ function AtlasLoot_OnVariablesLoaded()
 	if not AtlasLootCharDB["SearchResult"] then AtlasLootCharDB["SearchResult"] = {} end
 	--Add the loot browser to the special frames tables to enable closing wih the ESC key
 	tinsert(UISpecialFrames, "AtlasLootDefaultFrame");
+	tinsert(UISpecialFrames, "AtlasLootOptionsFrame")
 	--Set up options frame
 	AtlasLootOptions_OnLoad();
 	--Legacy code for those using the ultimately failed attempt at making Atlas load on demand
@@ -417,15 +420,16 @@ function AtlasLoot_OnVariablesLoaded()
 	--Position relevant UI objects for loot browser and set up menu
 	AtlasLootDefaultFrame_SelectedCategory:SetPoint("TOP", "AtlasLootDefaultFrame_Menu", "BOTTOM", 0, -4);
 	AtlasLootDefaultFrame_SelectedTable:SetPoint("TOP", "AtlasLootDefaultFrame_SubMenu", "BOTTOM", 0, -4);
-	AtlasLootDefaultFrame_SelectedCategory:SetText(AL["Choose Table ..."]);
+	AtlasLootDefaultFrame_SelectedCategory:SetText(AtlasLootCharDB.LastBossText);
 	AtlasLootDefaultFrame_SelectedTable:SetText("");
 	AtlasLootDefaultFrame_SelectedCategory:Show();
 	AtlasLootDefaultFrame_SelectedTable:Show();
 	AtlasLootDefaultFrame_SubMenu:Disable();
 	--Load the last loaded sebmenu
-	if AtlasLootCharDB["LastMenu"] then
+	--[[if AtlasLootCharDB["LastMenu"] then
+		AtlasLoot_ShowBossLoot(AtlasLootCharDB.LastBoss, AtlasLootCharDB.LastBossText, pFrame)
 		AtlasLoot_HewdropClick(AtlasLootCharDB["LastMenu"][1],AtlasLootCharDB["LastMenu"][2],AtlasLootCharDB["LastMenu"][3])
-	end
+	end]]
 end
 
 --[[
@@ -501,8 +505,8 @@ function AtlasLootOptions_Fresh()
 	AtlasLootCharDB.MinimapButtonPosition = 315;
 	AtlasLootCharDB.MinimapButtonRadius = 78;
 	AtlasLootCharDB.HidePanel = false;
-	AtlasLootCharDB.LastBoss = "RFCTaragaman";
-	AtlasLootCharDB.LastBossText = AL["Taragaman the Hungerer"];
+	AtlasLootCharDB.LastBoss = "DUNGEONSMENU1";
+	AtlasLootCharDB.LastBossText = AL["Dungeons & Raids"];
 	AtlasLootCharDB.AtlasLootVersion = VERSION_MAJOR..VERSION_MINOR..VERSION_BOSSES;
 	AtlasLootCharDB.AutoQuery = false;
 	AtlasLootCharDB.PartialMatching = true;
@@ -598,11 +602,15 @@ function AtlasLoot_SetItemInfoFrame(pFrame)
 		AtlasLootItemsFrame:ClearAllPoints();
 		AtlasLootItemsFrame:SetParent(AtlasFrame);
 		AtlasLootItemsFrame:SetPoint("TOPLEFT", "AtlasFrame", "TOPLEFT", 18, -84);
-	else
+	elseif ( AtlasDefaultFrame ) then
+		AtlasLootItemsFrame:ClearAllPoints();
+		AtlasLootItemsFrame:SetParent(AtlasLootDefaultFrame);
+		AtlasLootItemsFrame:SetPoint("TOPLEFT", "AtlasLootDefaultFrame", "TOPLEFT", 0, 0);
+	--[[else
 		--Last resort, dump the items frame in the middle of the screen
 		AtlasLootItemsFrame:ClearAllPoints();
 		AtlasLootItemsFrame:SetParent(UIParent);
-		AtlasLootItemsFrame:SetPoint("CENTER", "UIParent", "CENTER", 0, 0);
+		AtlasLootItemsFrame:SetPoint("CENTER", "UIParent", "CENTER", 0, 0);]]
 	end
 	AtlasLootItemsFrame:Show();
 end
@@ -748,7 +756,7 @@ function AtlasLoot_Refresh()
 		local f;
 		if (not getglobal("AtlasBossLine"..i)) then
 			f = CreateFrame("Button", "AtlasBossLine"..i, AtlasFrame, "AtlasLootNewBossLineTemplate");
-			f:SetFrameStrata("MEDIUM");
+			f:SetFrameStrata("FULLSCREEN_DIALOG");
 			if i==1 then
 				f:SetPoint("TOPLEFT", "AtlasScrollBar", "TOPLEFT", 16, -3);
 			else
@@ -1160,8 +1168,6 @@ function AtlasLoot_ShowItemsFrame(dataID, dataSource, boss, pFrame)
 		AtlasLootWorldEpicsMenu();
 	elseif(dataID=="WORLDEVENTMENU") then
 		AtlasLootWorldEventMenu();
-	elseif(dataID=="AbyssalCouncil") then
-		AtlasLootAbyssalCouncilMenu();
 	elseif(dataID=="CRAFTINGMENU") then
 		AtlasLoot_CraftingMenu();
 	elseif(dataID=="CRAFTSET") then
@@ -1182,8 +1188,12 @@ function AtlasLoot_ShowItemsFrame(dataID, dataSource, boss, pFrame)
 		AtlasLoot_TailoringMenu();
 	elseif(dataID=="COOKINGMENU") then
 		AtlasLoot_CookingMenu();
-	elseif(dataID=="SURVIVALMENU") then
-		AtlasLoot_SurvivalMenu();
+	elseif(dataID=="WORLDBOSSMENU") then
+		AtlasLoot_WorldBossMenu();
+	elseif(dataID=="DUNGEONSMENU1") then
+		AtlasLoot_DungeonsMenu1();
+	elseif(dataID=="DUNGEONSMENU2") then
+		AtlasLoot_DungeonsMenu2();
 	else
 		--Iterate through each item object and set its properties
 		for i = 1, 30, 1 do
@@ -1245,7 +1255,7 @@ function AtlasLoot_ShowItemsFrame(dataID, dataSource, boss, pFrame)
 				--This is a valid QuickLook, so show the UI objects
 				AtlasLoot_QuickLooks:Show();
 				AtlasLootQuickLooksButton:Show();
-				AtlasLootServerQueryButton:Show();
+				AtlasLootServerQueryButton:Hide();
 				--Insert the item description
 				extra = dataSource[dataID][i][4];
 				extra = AtlasLoot_FixText(extra);
@@ -1612,6 +1622,7 @@ function AtlasLoot_HewdropSubMenuRegister(loottable)
 						'notCheckable', true
 					)
 				end
+				--[[
 				AtlasLoot_HewdropSubMenu:AddLine(
 					'text', AL["Close Menu"],
 					'textR', 0,
@@ -1620,6 +1631,7 @@ function AtlasLoot_HewdropSubMenuRegister(loottable)
 					'func', function() AtlasLoot_HewdropSubMenu:Close() end,
 					'notCheckable', true
 				)
+				]]
 			end
 		end,
 		'dontHook', true
@@ -1667,6 +1679,8 @@ function AtlasLoot_HewdropRegister()
 										'textB', 0,
 										'hasArrow', true,
 										'value', j,
+										'func', AtlasLoot_OpenMenu,
+										'arg1', i,
 										'notCheckable', true
 									)
 									lock=1;
@@ -1675,7 +1689,7 @@ function AtlasLoot_HewdropRegister()
 						end
 					end
 				end
-				--Close button
+				--[[Close button
 				AtlasLoot_Hewdrop:AddLine(
 					'text', AL["Close Menu"],
 					'textR', 0,
@@ -1684,6 +1698,7 @@ function AtlasLoot_HewdropRegister()
 					'func', function() AtlasLoot_Hewdrop:Close() end,
 					'notCheckable', true
 				)
+				]]
 			elseif level == 2 then
 				if value then
 					for k,v in ipairs(value) do
@@ -1707,6 +1722,9 @@ function AtlasLoot_HewdropRegister()
 								else
 									AtlasLoot_Hewdrop:AddLine(
 										'text', v[1][1],
+										'textR', 1,
+										'textG', 0.82,
+										'textB', 0,
 										'func', AtlasLoot_HewdropClick,
 										'arg1', v[1][2],
 										'arg2', v[1][1],
@@ -1735,6 +1753,7 @@ function AtlasLoot_HewdropRegister()
 						end
 					end
 				end
+				--[[
 				AtlasLoot_Hewdrop:AddLine(
 					'text', AL["Close Menu"],
 					'textR', 0,
@@ -1743,6 +1762,7 @@ function AtlasLoot_HewdropRegister()
 					'func', function() AtlasLoot_Hewdrop:Close() end,
 					'notCheckable', true
 				)
+				]]
 			elseif level == 3 then
 				--Essentially the same as level == 2
 				if value then
@@ -1764,6 +1784,9 @@ function AtlasLoot_HewdropRegister()
 							else
 								AtlasLoot_Hewdrop:AddLine(
 									'text', v[1],
+									'textR', 1,
+									'textG', 0.82,
+									'textB', 0,
 									'func', AtlasLoot_HewdropClick,
 									'arg1', v[2],
 									'arg2', v[1],
@@ -1784,6 +1807,7 @@ function AtlasLoot_HewdropRegister()
 						end
 					end
 				end
+				--[[
 				AtlasLoot_Hewdrop:AddLine(
 					'text', AL["Close Menu"],
 					'textR', 0,
@@ -1792,10 +1816,45 @@ function AtlasLoot_HewdropRegister()
 					'func', function() AtlasLoot_Hewdrop:Close() end,
 					'notCheckable', true
 				)
+				]]
 			end
 		end,
 		'dontHook', true
 	)
+end
+
+function AtlasLoot_OpenMenu(menu_name)
+	AtlasLoot_QuickLooks:Hide();
+	AtlasLootQuickLooksButton:Hide();
+	AtlasLootServerQueryButton:Hide();
+	AtlasLootDefaultFrame_SelectedCategory:SetText(menu_name)
+	AtlasLootDefaultFrame_SubMenu:Disable();
+	AtlasLootDefaultFrame_SelectedTable:SetText("");
+	AtlasLootDefaultFrame_SelectedTable:Show();
+	AtlasLootCharDB.LastBoss = this.lootpage;
+	AtlasLootCharDB.LastBossText = menu_name;
+	if menu_name == "Crafting" then
+		AtlasLoot_CraftingMenu()
+		CloseDropDownMenus()
+	elseif menu_name == "PvP Rewards" then
+		AtlasLootPvPMenu()
+		CloseDropDownMenus()
+	elseif menu_name == "World Events" then
+		AtlasLootWorldEventMenu()
+		CloseDropDownMenus()
+	elseif menu_name == "Collections" then
+		AtlasLootSetMenu()
+		CloseDropDownMenus()
+	elseif menu_name == "Factions" then
+		AtlasLootRepMenu()
+		CloseDropDownMenus()
+	elseif menu_name == "World Bosses" then
+		AtlasLoot_WorldBossMenu()
+		CloseDropDownMenus()
+	elseif menu_name == "Dungeons & Raids" then
+		AtlasLoot_DungeonsMenu1()
+		CloseDropDownMenus()
+	end
 end
 
 --[[
@@ -1833,8 +1892,14 @@ function AtlasLootMenuItem_OnClick()
 					for k3, v3 in pairs(v2) do
 						for k4, v4 in pairs(v3) do
 							if not (type(v4[1]) == "table") then
-								if v4[1] == pagename then
+								if v4[1] == pagename and v4[3] ~= "Table" then
 									AtlasLoot_HewdropClick(v4[2],v4[1],v4[3])
+								end
+							else
+								for k5,v5 in pairs(v4) do
+									if v5[1] == pagename then
+										AtlasLoot_HewdropClick(v5[2],v5[1],v5[3])
+									end
 								end
 							end
 						end
@@ -1842,7 +1907,12 @@ function AtlasLootMenuItem_OnClick()
 				end
 			end
 		end
+		CloseDropDownMenus()
+		AtlasLootCharDB.LastBoss = this.lootpage;
+		AtlasLootCharDB.LastBossText = pagename;
 		AtlasLoot_ShowBossLoot(this.lootpage, pagename, AtlasLoot_AnchorFrame);
+		AtlasLootDefaultFrame_SelectedCategory:SetText(pagename);
+		AtlasLootDefaultFrame_SelectedCategory:Show();
 	end
 end
 
@@ -1851,6 +1921,15 @@ AtlasLoot_NavButton_OnClick:
 Called when <-, -> or 'Back' are pressed and calls up the appropriate loot page
 ]]
 function AtlasLoot_NavButton_OnClick()
+	if AtlasLootCharDB.LastBoss == "DUNGEONSMENU1" then
+		AtlasLoot_DungeonsMenu2()
+		AtlasLootDefaultFrame_SubMenu:Disable();
+		return
+	elseif AtlasLootCharDB.LastBoss == "DUNGEONSMENU2" then
+		AtlasLoot_DungeonsMenu1()
+		AtlasLootDefaultFrame_SubMenu:Disable();
+		return
+	end
 	if AtlasLootItemsFrame.refresh and AtlasLootItemsFrame.refresh[2] and AtlasLootItemsFrame.refresh[4] then
 		if string.sub(this.lootpage, 1, 16) == "SearchResultPage" then
 			AtlasLoot_ShowItemsFrame("SearchResult", this.lootpage, string.format((AL["Search Result: %s"]), AtlasLootCharDB.LastSearchedText or ""), AtlasLootItemsFrame.refresh[4]);
@@ -1860,13 +1939,24 @@ function AtlasLoot_NavButton_OnClick()
 			AtlasLootCharDB.LastBoss = this.lootpage;
 			AtlasLootCharDB.LastBossText = this.title;
 			AtlasLoot_ShowItemsFrame(this.lootpage, AtlasLootItemsFrame.refresh[2], this.title, AtlasLootItemsFrame.refresh[4]);
-			
+			if AtlasLootDefaultFrame_SelectedTable:GetText()~=nil then 
+				AtlasLootDefaultFrame_SelectedTable:SetText(AtlasLoot_BossName:GetText())
+			else
+				AtlasLootDefaultFrame_SelectedCategory:SetText(AtlasLoot_BossName:GetText())
+			end
 		end
 	elseif AtlasLootItemsFrame.refresh and AtlasLootItemsFrame.refresh[2] then
 		AtlasLoot_ShowItemsFrame(this.lootpage, AtlasLootItemsFrame.refresh[2], this.title, AtlasFrame);
 	else
 		--Fallback for if the requested loot page is a menu and does not have a .refresh instance
 		AtlasLoot_ShowItemsFrame(this.lootpage, "dummy", this.title, AtlasFrame);
+	end
+	for k,v in pairs(AtlasLoot_MenuList) do
+		if this.lootpage == v then
+			AtlasLootDefaultFrame_SubMenu:Disable();
+			AtlasLootDefaultFrame_SelectedCategory:SetText(AtlasLootCharDB.LastBossText)
+			AtlasLootDefaultFrame_SelectedTable:SetText()
+		end
 	end
 end
 
@@ -2108,8 +2198,8 @@ function AtlasLootOptions_DefaultSettings()
 	AtlasLootCharDB.AtlasLootVersion = VERSION_MAJOR..VERSION_MINOR..VERSION_BOSSES;
 	AtlasLootCharDB.AutoQuery = false;
 	AtlasLootCharDB.PartialMatching = true;
-	AtlasLootCharDB.LastBoss = "RFCTaragaman";
-	AtlasLootCharDB.LastBossText = AL["Taragaman the Hungerer"];
+	AtlasLootCharDB.LastBoss = "DUNGEONSMENU1";
+	AtlasLootCharDB.LastBossText = AL["Dungeons & Raids"];
 	AtlasLootDefaultFrame:ClearAllPoints();
 	AtlasLootDefaultFrame:SetPoint("TOP", "UIParent", "TOP", 0, -30);
 	AtlasLootOptionsFrame:ClearAllPoints();
@@ -2184,275 +2274,166 @@ end
 AtlasLoot_HewdropDown = {
 	[1] = {
 		[AL["Dungeons & Raids"]] = {
-			[1] = {
-				{ AL["Ragefire Chasm"], "RagefireChasm", "Submenu" },
-			},
-			[2] = {
-				{ AL["Wailing Caverns"], "WailingCaverns", "Submenu" },
-			},
-			[3] = {
-				{ AL["The Deadmines"], "Deadmines", "Submenu" },
-			},
-			[4] = {
-				{ AL["Shadowfang Keep"], "ShadowfangKeep", "Submenu" },
-			},
-			[5] = {
-				{ AL["Blackfathom Deeps"], "BlackfathomDeeps", "Submenu" },
-			},
-			[6] = {
-				{ AL["The Stockade"], "TheStockade", "Submenu" },
-			},
-			[7] = {
-				{ AL["Gnomeregan"], "Gnomeregan", "Submenu" },
-			},
-			[8] = {
-				{ AL["Razorfen Kraul"], "RazorfenKraul", "Submenu" },
-			},
-			[9] = {
-				{ AL["The Crescent Grove"], "TheCrescentGrove", "Submenu" },
-			},
-			[10] = {
-				[AL["Scarlet Monastery"]] = {
+			[1] = {{ AL["Ragefire Chasm"], "RagefireChasm", "Submenu" },},
+			[2] = {{ AL["Wailing Caverns"], "WailingCaverns", "Submenu" },},
+			[3] = {{ AL["The Deadmines"], "Deadmines", "Submenu" },},
+			[4] = {{ AL["Shadowfang Keep"], "ShadowfangKeep", "Submenu" },},
+			[5] = {{ AL["Blackfathom Deeps"], "BlackfathomDeeps", "Submenu" },},
+			[6] = {{ AL["The Stockade"], "TheStockade", "Submenu" },},
+			[7] = {{ AL["Gnomeregan"], "Gnomeregan", "Submenu" },},
+			[8] = {{ AL["Razorfen Kraul"], "RazorfenKraul", "Submenu" },},
+			[9] = {{ AL["The Crescent Grove"], "TheCrescentGrove", "Submenu" },},
+			[10] = {[AL["Scarlet Monastery"]] = {
 					{ AL["Scarlet Monastery (Graveyard)"], "SMGraveyard", "Submenu" },
 					{ AL["Scarlet Monastery (Library)"], "SMLibrary", "Submenu" },
 					{ AL["Scarlet Monastery (Armory)"], "SMArmory", "Submenu" },
 					{ AL["Scarlet Monastery (Cathedral)"], "SMCathedral", "Submenu" },
-				},
-			},
-			[11] = {
-				{ AL["Razorfen Downs"], "RazorfenDowns", "Submenu" },
-			},
-			[12] = {
-				{ AL["Uldaman"], "Uldaman", "Submenu" },
-			},
-			[13] = {
-				{ AL["Gilneas City"], "GilneasCity", "Submenu" },
-			},
-			[14] = {
-				{ AL["Maraudon"], "Maraudon", "Submenu" },
-			},
-			[15] = {
-				{ AL["Zul'Farrak"], "ZulFarrak", "Submenu" },
-			},
-			[16] = {
-				{ AL["The Sunken Temple"], "SunkenTemple", "Submenu" },
-			},
-			[17] = {
-				{ AL["Hateforge Quarry"], "HateforgeQuarry", "Submenu" },
-			},
-			[18] = {
-				{ AL["Blackrock Depths"], "BlackrockDepths", "Submenu" },
-			},
-			[19] = {
-				[AL["Dire Maul"]] = {
+				},},
+			[11] = {{ AL["Razorfen Downs"], "RazorfenDowns", "Submenu" },},
+			[12] = {{ AL["Uldaman"], "Uldaman", "Submenu" },},
+			[13] = {{ AL["Gilneas City"], "GilneasCity", "Submenu" },},
+			[14] = {{ AL["Maraudon"], "Maraudon", "Submenu" },},
+			[15] = {{ AL["Zul'Farrak"], "ZulFarrak", "Submenu" },},
+			[16] = {{ AL["The Sunken Temple"], "SunkenTemple", "Submenu" },},
+			[17] = {{ AL["Hateforge Quarry"], "HateforgeQuarry", "Submenu" },},
+			[18] = {{ AL["Blackrock Depths"], "BlackrockDepths", "Submenu" },},
+			[19] = {[AL["Dire Maul"]] = {
 					{ AL["Dire Maul (East)"], "DireMaulEast", "Submenu" },
 					{ AL["Dire Maul (West)"], "DireMaulWest", "Submenu" },
 					{ AL["Dire Maul (North)"], "DireMaulNorth", "Submenu" },
-				},
-			},
-			[20] = {
-				{ AL["Scholomance"], "Scholomance", "Submenu" },
-			},
-			[21] = {
-				{ AL["Stratholme"], "Stratholme", "Submenu" },
-			},
-			[22] = {
-				{ AL["Lower Blackrock Spire"], "LowerBlackrock", "Submenu" },
-			},
-			[23] = {
-				{ AL["Upper Blackrock Spire"], "UpperBlackrock", "Submenu" },
-			},
-			[24] = {
-				{ AL["Karazhan Crypt"], "KarazhanCrypt", "Submenu" },
-			},
-			[25] = {
-				{ AL["Caverns of Time: Black Morass"], "CavernsOfTimeBlackMorass", "Submenu" },
-			},
-			[26] = {
-				{ AL["Stormwind Vault"], "StormwindVault", "Submenu" },
-			},
-			[27] = {
-				{ AL["Zul'Gurub"], "ZulGurub", "Submenu" },
-			},
-			[28] = {
-				{ AL["Ruins of Ahn'Qiraj"], "RuinsofAQ", "Submenu" },
-			},
-			[29] = {
-				{ AL["Molten Core"], "MoltenCore", "Submenu" },
-			},
-			[30] = {
-				{ AL["Onyxia's Lair"], "Onyxia", "Submenu" },
-			},
-			[31] = {
-				{ AL["Lower Karazhan Halls"], "LowerKara", "Submenu" },
-			},
-			[32] = {
-				{ AL["Blackwing Lair"], "BlackwingLair", "Submenu" },
-			},
-			[33] = {
-				{ AL["Emerald Sanctum"], "EmeraldSanctum", "Submenu" },
-			},
-			[34] = {
-				{ AL["Temple of Ahn'Qiraj"], "TempleofAQ", "Submenu" },
-			},
-			[35] = {
-				{ AL["Naxxramas"], "Naxxramas", "Submenu" },
-			},
+				},},
+			[20] = {{ AL["Scholomance"], "Scholomance", "Submenu" },},
+			[21] = {{ AL["Stratholme"], "Stratholme", "Submenu" },},
+			[22] = {{ AL["Lower Blackrock Spire"], "LowerBlackrock", "Submenu" },},
+			[23] = {{ AL["Upper Blackrock Spire"], "UpperBlackrock", "Submenu" },},
+			[24] = {{ AL["Karazhan Crypt"], "KarazhanCrypt", "Submenu" },},
+			[25] = {{ AL["Caverns of Time: Black Morass"], "CavernsOfTimeBlackMorass", "Submenu" },},
+			[26] = {{ AL["Stormwind Vault"], "StormwindVault", "Submenu" },},
+			[27] = {{ AL["Zul'Gurub"], "ZulGurub", "Submenu" },},
+			[28] = {{ AL["Ruins of Ahn'Qiraj"], "RuinsofAQ", "Submenu" },},
+			[29] = {{ AL["Molten Core"], "MoltenCore", "Submenu" },},
+			[30] = {{ AL["Onyxia's Lair"], "Onyxia", "Submenu" },},
+			[31] = {{ AL["Lower Karazhan Halls"], "LowerKara", "Submenu" },},
+			[32] = {{ AL["Blackwing Lair"], "BlackwingLair", "Submenu" },},
+			[33] = {{ AL["Emerald Sanctum"], "EmeraldSanctum", "Submenu" },},
+			[34] = {{ AL["Temple of Ahn'Qiraj"], "TempleofAQ", "Submenu" },},
+			[35] = {{ AL["Naxxramas"], "Naxxramas", "Submenu" },},
 		},
 	},
-	[2] = {
-		{ AL["World Bosses"], "WorldBosses", "Submenu" },
-	},
-	[3] = {
-		{ "Rare Spawns", "RareSpawns", "Submenu" },
-	},
-	[4] = {
-		[AL["PvP Rewards"]] = {
-			[1] = {
-				{ AL["PvP Armor Sets"], "PvPArmorSets", "Submenu" },
-			},
-			[2] = {
-				{ AL["PvP Accessories"], "PvP60Accessories1", "Table" },
-			},
-			[3] = {
-				{ AL["Rank 14 Weapons"], "PVPWeapons1", "Table" },
-			},
-			[4] = {
-				{ AL["PvP Mounts"], "PvPMountsPvP", "Table" },
-			},
-			[5] = {
-				{ AL["Blood Ring"], "BRRewards", "Submenu" },
-			},
-			[6] = {
-				{ AL["Alterac Valley"], "AVRewards", "Submenu" },
-			},
-			[7] = {
-				{ AL["Arathi Basin"], "ABRewards", "Submenu" },
-			},
-			[8] = {
-				{ AL["Warsong Gulch"], "WSGRewards", "Submenu" },
-			},
+	[2] = { [AL["World Bosses"]] = {
+		[1] = {{AL["Azuregos"], "AAzuregos", "Table" },},
+		[2] = {{AL["Emeriss"], "DEmeriss", "Table" },},
+		[3] = {{AL["Lethon"], "DLethon", "Table" },},
+		[4] = {{AL["Taerar"], "DTaerar", "Table" },},
+		[5] = {{AL["Ysondre"], "DYsondre", "Table" },},
+		[6] = {{AL["Lord Kazzak"], "KKazzak", "Table" },},
+		[7] = {{AL["Nerubian Overseer"], "Nerubian", "Table" },},
+		[8] = {{AL["Dark Reaver of Karazhan"], "Reaver", "Table" },},
+		[9] = {{AL["Ostarius"], "Ostarius", "Table" },},
+		[10] = {{AL["Concavius"], "Concavius", "Table" },},
+		[11] = {{AL["There Is No Cow Level"], "CowKing", "Table" },},
 		},
 	},
+
+	[3] = {[AL["PvP Rewards"]] = {
+		[1] = {{ AL["PvP Armor Sets"], "PVPSET", "Table" },},
+		[2] = {{ AL["PvP Accessories"], "PvP60Accessories1", "Table" },},
+		[3] = {{ AL["Rank 14 Weapons"], "PVPWeapons1", "Table" },},
+		[4] = {{ AL["PvP Mounts"], "PvPMountsPvP", "Table" },},
+		[5] = {{ AL["Blood Ring"], "BRRepMenu", "Table" },},
+		[6] = {{ AL["Alterac Valley"], "AVRepMenu", "Table" },},
+		[7] = {{ AL["Arathi Basin"], "ABRepMenu", "Table" },},
+		[8] = {{ AL["Warsong Gulch"], "WSGRepMenu", "Table" },},
+		},
+	},
+	[4] = {[AL["Collections"]] = {
+			[1] = {{ AL["Sets"], "PRE60SET", "Table" },},
+			[2] = {{ AL["Zul'Gurub Sets"], "ZGSET", "Table" },},
+			[3] = {{ AL["Ruins of Ahn'Qiraj Sets"], "AQ20SET", "Table" },},
+			[4] = {{ AL["Temple of Ahn'Qiraj Sets"], "AQ40SET", "Table" },},
+			[5] = {{ AL["Dungeon 1/2 Sets"], "T0SET", "Table" },},
+			[6] = {{ AL["Tier 1 Sets"], "T1SET", "Table" },},
+			[7] = {{ AL["Tier 2 Sets"], "T2SET", "Table" },},
+			[8] = {{ AL["Tier 3 Sets"], "T3SET", "Table" },},
+			[9] = {{ AL["Legendary Items"], "Legendaries", "Table" },},
+			[10] = {{ AL["World Epics"], "WORLDEPICS", "Table" },},
+			[11] = {{ AL["Rare Pets"], "RarePets1", "Table" },},
+			[12] = {{ AL["Rare Mounts"], "RareMounts", "Table" },},
+			[13] = {{ AL["Fashion"], "DonationRewards2", "Table" },},
+			[14] = {{ AL["Tabards"], "Tabards", "Table" },},
+			--[15] = {{ AL["Old Mounts"], "OldMounts", "Table" },},
+			--[16] = {{ AL["Unobtainable Mounts"], "UnobMounts", "Table" },},
+			},
+		},
 	[5] = {
-		[AL["Sets/Collections"]] = {
-			[1] = {
-				{ AL["Pre 60 Sets"], "Pre60Sets", "Submenu" },
-			},
-			[2] = {
-				{ AL["Dungeon 1/2 Sets"], "DungeonSets12", "Submenu" },
-			},
-			[3] = {
-				{ AL["Ruins of Ahn'Qiraj Sets"], "AQ20Sets", "Submenu" },
-			},
-			[4] = {
-				{ AL["Temple of Ahn'Qiraj Sets"], "AQ40Sets", "Submenu" },
-			},
-			[5] = {
-				{ AL["Zul'Gurub Sets"], "ZGSets", "Submenu" },
-			},
-			[6] = {
-				{ AL["Tier 1 Sets"], "T1Sets", "Submenu" },
-			},
-			[7] = {
-				{ AL["Tier 2 Sets"], "T2Sets", "Submenu" },
-			},
-			[8] = {
-				{ AL["Tier 3 Sets"], "T3Sets", "Submenu" },
-			},
-			[9] = {
-				{ AL["Legendary Items"], "Legendaries", "Table" },
-			},
-			[10] = {
-				{ AL["Rare Pets"], "RarePets1", "Table" },
-			},
-			[11] = {
-				{ AL["Rare Mounts"], "RareMounts", "Table" },
-			},
-			[12] = {
-				{ AL["Old Mounts"], "OldMounts", "Table" },
-			},
-			[13] = {
-				{ AL["Unobtainable Mounts"], "UnobMounts", "Table" },
-			},
-			[14] = {
-				{ AL["Tabards"], "Tabards", "Table" },
-			},
-			[15] = {
-				{ AL["World Epics"], "BoEWorldEpics", "Submenu" },
+		 [AL["Factions"]] = {
+			[1] = {{ AL["Argent Dawn"], "Argent1" , "Table" },},
+			[2] = {{ AL["Bloodsail Buccaneers"], "Bloodsail1", "Table" },},
+			[3] = {{ AL["Brood of Nozdormu"], "AQBroodRings", "Table" },},
+			[4] = {{ AL["Cenarion Circle"], "Cenarion1", "Table" }},
+			[5] = {{ AL["Dalaran"], "Dalaran", "Table" },},
+			[6] = {{ AL["Darkmoon Faire"], "Darkmoon", "Table" },},
+			[7] = {{ AL["Darkspear Trolls"], "DarkspearTrolls", "Table" },},
+			[8] = {{ AL["Darnassus"], "Darnassus", "Table" },},
+			[9] = {{ AL["Durotar Labor Union"], "DurotarLaborUnion", "Table" },},
+			[10] = {{ AL["Frostwolf Clan"], "Frostwolf1", "Table" },},
+			[11] = {{ AL["Gelkis Clan Centaur"], "GelkisClan1", "Table" },},
+			[12] = {{ AL["Gnomeregan Exiles"], "GnomereganExiles", "Table" },},
+			[13] = {{ AL["Hydraxian Waterlords"], "WaterLords1", "Table" },},
+			[14] = {{ AL["Ironforge"], "Ironforge", "Table" },},
+			[15] = {{ AL["Magram Clan Centaur"], "MagramClan1", "Table" },},
+			[16] = {{ AL["Orgrimmar"], "Orgrimmar", "Table" },},
+			[17] = {{ AL["Revantusk Trolls"], "Revantusk", "Table" },},
+			[18] = {{ AL["Silvermoon Remnant"], "Helf", "Table" },},
+			[19] = {{ AL["Stormpike Guard"], "Stormpike1", "Table" },},
+			[20] = {{ AL["Stormwind"], "Stormwind", "Table" },},
+			[21] = {{ AL["Thorium Brotherhood"], "Thorium1", "Table" },},
+			[22] = {{ AL["Thunder Bluff"], "ThunderBluff", "Table" },},
+			[23] = {{ AL["Timbermaw Hold"], "Timbermaw", "Table" },},
+			[24] = {{ AL["Undercity"], "Undercity", "Table" },},
+			[25] = {{ AL["Wardens of Time"], "Wardens1", "Table" },},
+			[26] = {{ AL["Wildhammer Clan"], "Wildhammer", "Table" },},
+			[27] = {{ AL["Wintersaber Trainers"], "Wintersaber1", "Table" },},
+			[28] = {{ AL["Zandalar Tribe"], "Zandalar1", "Table" },},
+		 	},
+		},
+
+	[6] = {[AL["World Events"]] = {
+			[1] = {{ AL["Abyssal Council"], "AbyssalTemplars", "Table" },},
+			[2] = {{ AL["Children's Week"], "ChildrensWeek", "Table" },},
+			[3] = {{ AL["Elemental Invasion"], "ElementalInvasion", "Table" },},
+			[4] = {{ AL["Feast of Winter Veil"], "Winterviel1", "Table" },},
+			[5] = {{ AL["Gurubashi Arena Booty Run"], "GurubashiArena", "Table" },},
+			[6] = {{ AL["Hallow's End"], "Halloween1", "Table" },},
+			[7] = {{ AL["Harvest Festival"], "HarvestFestival", "Table" },},
+			[8] = {{ AL["Love is in the Air"], "Valentineday", "Table" },},
+			[9] = {{ AL["Lunar Festival"], "LunarFestival1", "Table" },},
+			[10] = {{ AL["Midsummer Fire Festival"], "MidsummerFestival", "Table" },},
+			[11] = {{ AL["Noblegarden"], "Noblegarden", "Table" },},
+			[12] = {{ AL["Scourge Invasion"], "ScourgeInvasionEvent1", "Table" },},
+			[13] = {{ AL["Stranglethorn Fishing Extravaganza"], "FishingExtravaganza", "Table" },},
 			},
 		},
-	},
-	[6] = {
-		{ AL["Reputation Factions"], "Factions", "Submenu" },
-	},
 	[7] = {
-		[AL["World Events"]] = {
-			[1] = {
-				{ AL["Abyssal Council"], "AbyssalCouncil", "Submenu" },
-			},
-			[2] = {
-				{ AL["Children's Week"], "ChildrensWeek", "Table" },
-			},
-			[3] = {
-				{ AL["Elemental Invasion"], "ElementalInvasion", "Table" },
-			},
-			[4] = {
-				{ AL["Feast of Winter Veil"], "Winterviel", "Submenu" },
-			},
-			[5] = {
-				{ AL["Gurubashi Arena Booty Run"], "GurubashiArena", "Table" },
-			},
-			[6] = {
-				{ AL["Hallow's End"], "Halloween1", "Table" },
-			},
-			[7] = {
-				{ AL["Harvest Festival"], "HarvestFestival", "Table" },
-			},
-			[8] = {
-				{ AL["Love is in the Air"], "Valentineday", "Table" },
-			},
-			[9] = {
-				{ AL["Lunar Festival"], "LunarFestival1", "Table" },
-			},
-			[10] = {
-				{ AL["Midsummer Fire Festival"], "MidsummerFestival", "Table" },
-			},
-			[11] = {
-				{ AL["Noblegarden"], "Noblegarden", "Table" },
-			},
-			[12] = {
-				{ AL["Scourge Invasion"], "ScourgeInvasionEvent1", "Table" },
-			},
-			[13] = {
-				{ AL["Stranglethorn Fishing Extravaganza"], "FishingExtravaganza", "Table" },
-			},
-		},
-	},
-	[8] = {
 		[AL["Crafting"]] = {
-			[1] = { { AL["Alchemy"], "Alchemy", "Submenu" }, },
-			[2] = { { (AL["Blacksmithing"]), "Blacksmithing", "Submenu" }, },
-			[3] = { { (AL["Enchanting"]), "Enchanting", "Submenu" }, },
-			[4] = { { (AL["Engineering"]), "Engineering", "Submenu" }, },
+			[1] = { { AL["Alchemy"], "ALCHEMYMENU", "Table" }, },
+			[2] = { { (AL["Blacksmithing"]), "SMITHINGMENU", "Table" }, },
+			[3] = { { (AL["Enchanting"]), "ENCHANTINGMENU", "Table" }, },
+			[4] = { { (AL["Engineering"]), "ENGINEERINGMENU", "Table" }, },
 			[5] = { { (AL["Herbalism"]), "Herbalism1", "Table" }, },
-			[6] = { { (AL["Leatherworking"]), "Leatherworking", "Submenu" }, },
-			[7] = { { (AL["Mining"]), "Mining", "Submenu" }, },
-			[8] = { { (AL["Tailoring"]), "Tailoring", "Submenu" }, },
-			[9] = { { (AL["Cooking"]), "Cooking", "Submenu" }, },
+			[6] = { { (AL["Leatherworking"]), "LEATHERWORKINGMENU", "Table" }, },
+			[7] = { { (AL["Mining"]), "MININGMENU", "Table" }, },
+			[8] = { { (AL["Tailoring"]), "TAILORINGMENU", "Table" }, },
+			[9] = { { (AL["Cooking"]), "COOKINGMENU", "Table" }, },
 			[10] = { { (AL["First Aid"]), "FirstAid1", "Table" }, },
-			[11] = { { (AL["Survival"]), "Survival", "Submenu" }, },
-			[12] = { { (AL["Poisons"]), "Poisons1", "Table" }, },
-			[13] = {
-				[AL["Crafted Sets"]] = {
-					{ (AL["Blacksmithing"]), "CraftSetBlacksmith", "Submenu" },
-					{ (AL["Leatherworking"]), "CraftSetLeatherwork", "Submenu" },
-					{ (AL["Tailoring"]), "CraftSetTailoring", "Submenu" },
-				},
-			},
-			[14] = { { AL["Crafted Epic Weapons"], "CraftedWeapons1", "Table" }, },
+			[11] = { { (AL["Survival"]), "Survival1", "Table" }, },
+			[12] = { { (AL["Gardening"]), "Survival2", "Table" }, },
+			[13] = { { (AL["Poisons"]), "Poisons1", "Table" }, },
+			[14] = { { AL["Crafted Sets"], "CRAFTSET", "Table" },},
+			[15] = { { AL["Crafted Epic Weapons"], "CraftedWeapons1", "Table" }, },
 		},
 	},
+	[8] = {{ "Rare Spawns", "RareSpawns", "Submenu" },},
 };
 
 --This table defines all the subtables needed for the full menu
@@ -2880,7 +2861,7 @@ AtlasLoot_HewdropDown_SubTables = {
 		{ AL["Ossirian the Unscarred"], "AQ20Ossirian" },
 		{ AL["Trash Mobs"], "AQ20Trash" },
 		{ AL["Class Books"], "AQ20ClassBooks" },
-		{ AL["AQ Enchants"], "AQEnchants" },
+		{ AL["AQ Enchants"], "AQ20Enchants" },
 	},
 	["TempleofAQ"] = {
 		{ AL["The Prophet Skeram"], "AQ40Skeram" },
@@ -2943,11 +2924,11 @@ AtlasLoot_HewdropDown_SubTables = {
 		{ AL["Ysondre"], "DYsondre" },
 		{ AL["Lord Kazzak"], "KKazzak"},
 		--{ "Turtlhu, the Black Turtle of Doom", "Turtlhu" },
-		{ "Nerubian Overseer", "Nerubian" },
-		{ "Dark Reaver of Karazhan", "Reaver" },
-		{ "Ostarius", "Ostarius" },
-		{ "Concavius", "Concavius" },
-		{ "There Is No Cow Level", "CowKing" },
+		{ AL["Nerubian Overseer"], "Nerubian" },
+		{ AL["Dark Reaver of Karazhan"], "Reaver" },
+		{ AL["Ostarius"], "Ostarius" },
+		{ AL["Concavius"], "Concavius" },
+		{ AL["There Is No Cow Level"], "CowKing" },
 	},
 	["RareSpawns"] = {
 		{ "|cffffffff[17]|cffffd200 Earthcaller Rezengal |cffffffff(Stonetalon)", "EarthcallerRezengal" },
@@ -2994,8 +2975,9 @@ AtlasLoot_HewdropDown_SubTables = {
 		{ AL["Abyssal Council"].." - "..AL["High Council"], "AbyssalLords" },
 	},
 	["Winterviel"] = {
-		{ AL["Feast of Winter Veil"], "Winterviel1", "Table" },
-		{ "Snowball", "WintervielSnowball", "Table" },
+		{ AL["Feast of Winter Veil"], "Winterviel1"},
+		{ AL["Feast of Winter Veil"], "Winterviel2"},
+		{ "Snowball", "WintervielSnowball"},
 	},
 	["Factions"] = {
 		{ AL["Argent Dawn"], "Argent1" },
@@ -3022,7 +3004,7 @@ AtlasLoot_HewdropDown_SubTables = {
 		{ AL["Thunder Bluff"], "ThunderBluff" },
 		{ AL["Timbermaw Hold"], "Timbermaw" },
 		{ AL["Undercity"], "Undercity" },
-		{ AL["Wardens of Time"], "Warderns1" },
+		{ AL["Wardens of Time"], "Wardens1" },
 		{ AL["Wildhammer Clan"], "Wildhammer" },
 		{ AL["Wintersaber Trainers"], "Wintersaber1" },
 		{ AL["Zandalar Tribe"], "Zandalar1" },
@@ -3135,6 +3117,9 @@ AtlasLoot_HewdropDown_SubTables = {
 		{ "|cff2773ff"..AL["Shaman"], "ZGShaman" },
 		{ "|cfff48cba"..AL["Paladin"], "ZGPaladin" },
 		{ "|cffc69b6d"..AL["Warrior"], "ZGWarrior" },
+		{ AL["Zul'Gurub Rings"], "ZGRings" },
+		{ AL["The Twin Blades of Hakkari"], "HakkariBlades" },
+		{ AL["Zul'Gurub Rings"], "ZGRings" },
 	},
 	["Pre60Sets"] = {
 		{ AL["Bloodmail Regalia"], "ScholoMail" },
@@ -3153,8 +3138,7 @@ AtlasLoot_HewdropDown_SubTables = {
 		{ AL["Spirit of Eskhandar"], "SpiritofEskhandar" },
 		{ AL["The Gladiator"], "BLACKROCKD" },
 		{ AL["The Postmaster"], "STRAT" },
-		{ AL["The Twin Blades of Hakkari"], "HakkariBlades" },
-		{ AL["Zul'Gurub Rings"], "ZGRings" },
+
 	},
 	["BRRewards"] = {
 		{ AL["Friendly Reputation Rewards"], "BRRepFriendly" },
@@ -3202,6 +3186,12 @@ AtlasLoot_HewdropDown_SubTables = {
 		{ AtlasLoot_TableNames["AlchemyJourneyman1"][1], "AlchemyJourneyman1" },
 		{ AtlasLoot_TableNames["AlchemyExpert1"][1], "AlchemyExpert1" },
 		{ AtlasLoot_TableNames["AlchemyArtisan1"][1], "AlchemyArtisan1" },
+		{ AtlasLoot_TableNames["AlchemyHealingAndMana1"][1], "AlchemyHealingAndMana1" },
+		{ AtlasLoot_TableNames["AlchemyFlasks1"][1], "AlchemyFlasks1" },
+		{ AtlasLoot_TableNames["AlchemyTransmutes1"][1], "AlchemyTransmutes1" },
+		{ AtlasLoot_TableNames["AlchemyDefensive1"][1], "AlchemyDefensive1" },
+		{ AtlasLoot_TableNames["AlchemyOffensive1"][1], "AlchemyOffensive1" },
+		{ AtlasLoot_TableNames["AlchemyOther1"][1], "AlchemyOther1" },
 	},
 	["Blacksmithing"] = {
 		{ AtlasLoot_TableNames["SmithingApprentice1"][1], "SmithingApprentice1" },
@@ -3368,6 +3358,7 @@ function AtlasLootItem_OnEnter()
 						AtlasLootTooltip:AddLine(" ");
 						AtlasLootTooltip:AddLine(AL["You can right-click to attempt to query the server.  You may be disconnected."], nil, nil, nil, 1);
 						AtlasLootTooltip:Show();
+						AtlasLoot_QueryLootPage()
 					end
 				end
 			end

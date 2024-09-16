@@ -216,7 +216,7 @@ AtlasLootBossButtons = {
 		"DMTome";
 		"";
 		"DMETrash";
-		"DMBooks";
+		"DMEBooks";
 		"IRONWEAVE";
 	};
 	DireMaulNorth = {
@@ -245,7 +245,7 @@ AtlasLootBossButtons = {
 		"DMTome";
 		"";
 		"DMNTrash";
-		"DMBooks";
+		"DMNBooks";
 		"DMNTRIBUTERUN";
 	};
 	DireMaulWest = {
@@ -277,7 +277,7 @@ AtlasLootBossButtons = {
 		"DMTome";
 		"";
 		"DMWTrash";
-		"DMBooks";
+		"DMWBooks";
 	};
 	DireMaulEnt = {
 		"";
@@ -723,7 +723,7 @@ AtlasLootBossButtons = {
 		"";
 		"AQ20Trash";
 		"AQ20ClassBooks";
-		"AQEnchants";
+		"AQ20Enchants";
 		"AQ20SET";
 	};
 	TheStockade = {
@@ -2504,6 +2504,15 @@ AtlasLoot_Data["AtlasLootItems"] = {
 		{ 21229, "INV_ZulgurubTrinket", "=q1=Qiraji Lord's Insignia", "=ds=#m32# =q7=Bosses", "100%" },
 	};
 	AQEnchants = {
+		{ 20728, "INV_Misc_Note_01", "=q3=Formula: Enchant Gloves - Frost Power", "=ds=#p4# #m14#", "1%" },
+		{ 20731, "INV_Misc_Note_01", "=q3=Formula: Enchant Gloves - Superior Agility", "=ds=#p4# #m14#", "1%" },
+		{ 20734, "INV_Misc_Note_01", "=q3=Formula: Enchant Cloak - Stealth", "=ds=#p4# #m14#", "1%" },
+		{ 20729, "INV_Misc_Note_01", "=q3=Formula: Enchant Gloves - Fire Power", "=ds=#p4# #m14#", "1%" },
+		{ 20736, "INV_Misc_Note_01", "=q3=Formula: Enchant Cloak - Dodge", "=ds=#p4# #m14#", "1%" },
+		{ 20730, "INV_Misc_Note_01", "=q3=Formula: Enchant Gloves - Healing Power", "=ds=#p4# #m14#", "1%" },
+		{ 20727, "INV_Misc_Note_01", "=q3=Formula: Enchant Gloves - Shadow Power", "=ds=#p4# #m14#", "1%" },
+	};
+	AQ20Enchants = {
 		{ 20728, "INV_Misc_Note_01", "=q3=Formula: Enchant Gloves - Frost Power", "=ds=#p4# #m14#", "1%" },
 		{ 20731, "INV_Misc_Note_01", "=q3=Formula: Enchant Gloves - Superior Agility", "=ds=#p4# #m14#", "1%" },
 		{ 20734, "INV_Misc_Note_01", "=q3=Formula: Enchant Cloak - Stealth", "=ds=#p4# #m14#", "1%" },
@@ -4933,7 +4942,65 @@ AtlasLoot_Data["AtlasLootItems"] = {
 		{ 18334,"INV_Misc_Book_11","=q2=Libram of Protection","=ds=#e20#", "1-2%" },
 		{ 18332,"INV_Misc_Book_02","=q2=Libram of Rapidity","=ds=#e20#", "1-2%" },
 	};
-	DMBooks = {
+	DMNBooks = {
+		{ 18401,"INV_Misc_Book_11","=q4=Foror's Compendium of Dragon Slaying","=ds=#e20# =q17=#c9#=ds=, =q16=#c4#" },
+		{ 0,"","","" },
+		{ 18362, "INV_Misc_Book_08", "=q3=Holy Bologna: What the Light Won't Tell You", "=ds=#e20# =q9=#c5#" },
+		{ 18358, "INV_Misc_Book_01", "=q3=The Arcanist's Cookbook", "=ds=#e20# =q10=#c3#" },
+		{ 18360, "INV_Misc_Book_05", "=q3=Harnessing Shadows", "=ds=#e20# =q11=#c8#" },
+		{ 18356, "INV_Misc_Book_06", "=q3=Garona: A Study on Stealth and Treachery", "=ds=#e20# =q12=#c6#" },
+		{ 18364, "INV_Misc_Book_10", "=q3=The Emerald Dream", "=ds=#e20# =q13=#c1#" },
+		{ 18361, "INV_Misc_Book_02", "=q3=The Greatest Race of Hunters", "=ds=#e20# =q14=#c2#" },
+		{ 18363, "INV_Misc_Book_04", "=q3=Frost Shock and You", "=ds=#e20# =q15=#c7#" },
+		{ 18359, "INV_Misc_Book_11", "=q3=The Light and How to Swing It", "=ds=#e20# =q16=#c4#" },
+		{ 18357, "INV_Misc_Book_07", "=q3=Codex of Defense", "=ds=#e20# =q17=#c9#" },
+		{ 0,"","","" },
+		{ 18333,"INV_Misc_Book_04","=q2=Libram of Focus","=ds=#e20#" },
+		{ 18334,"INV_Misc_Book_11","=q2=Libram of Protection","=ds=#e20#" },
+		{ 18332,"INV_Misc_Book_02","=q2=Libram of Rapidity","=ds=#e20#" },
+		{ 18348,"INV_Sword_01","=q4=Quel'Serrar","=q1=#m4# =ds=#h3#, #w10#" },
+		{ 0,"","","" },
+		{ 18469, "INV_Jewelry_Talisman_10", "=q3=Royal Seal of Eldre'Thalas", "=ds=#s14# =q9=#c5#" },
+		{ 18468, "INV_Jewelry_Talisman_10", "=q3=Royal Seal of Eldre'Thalas", "=ds=#s14# =q10=#c3#" },
+		{ 18467, "INV_Jewelry_Talisman_10", "=q3=Royal Seal of Eldre'Thalas", "=ds=#s14# =q11=#c8#" },
+		{ 18465, "INV_Jewelry_Talisman_10", "=q3=Royal Seal of Eldre'Thalas", "=ds=#s14# =q12=#c6#" },
+		{ 18470, "INV_Jewelry_Talisman_10", "=q3=Royal Seal of Eldre'Thalas", "=ds=#s14# =q13=#c1#" },
+		{ 18473, "INV_Jewelry_Talisman_10", "=q3=Royal Seal of Eldre'Thalas", "=ds=#s14# =q14=#c2#" },
+		{ 18471, "INV_Jewelry_Talisman_10", "=q3=Royal Seal of Eldre'Thalas", "=ds=#s14# =q15=#c7#" },
+		{ 18472, "INV_Jewelry_Talisman_10", "=q3=Royal Seal of Eldre'Thalas", "=ds=#s14# =q16=#c4#" },
+		{ 18466, "INV_Jewelry_Talisman_10", "=q3=Royal Seal of Eldre'Thalas", "=ds=#s14# =q17=#c9#" },
+		{ 0,"","","" },
+	};
+	DMEBooks = {
+		{ 18401,"INV_Misc_Book_11","=q4=Foror's Compendium of Dragon Slaying","=ds=#e20# =q17=#c9#=ds=, =q16=#c4#" },
+		{ 0,"","","" },
+		{ 18362, "INV_Misc_Book_08", "=q3=Holy Bologna: What the Light Won't Tell You", "=ds=#e20# =q9=#c5#" },
+		{ 18358, "INV_Misc_Book_01", "=q3=The Arcanist's Cookbook", "=ds=#e20# =q10=#c3#" },
+		{ 18360, "INV_Misc_Book_05", "=q3=Harnessing Shadows", "=ds=#e20# =q11=#c8#" },
+		{ 18356, "INV_Misc_Book_06", "=q3=Garona: A Study on Stealth and Treachery", "=ds=#e20# =q12=#c6#" },
+		{ 18364, "INV_Misc_Book_10", "=q3=The Emerald Dream", "=ds=#e20# =q13=#c1#" },
+		{ 18361, "INV_Misc_Book_02", "=q3=The Greatest Race of Hunters", "=ds=#e20# =q14=#c2#" },
+		{ 18363, "INV_Misc_Book_04", "=q3=Frost Shock and You", "=ds=#e20# =q15=#c7#" },
+		{ 18359, "INV_Misc_Book_11", "=q3=The Light and How to Swing It", "=ds=#e20# =q16=#c4#" },
+		{ 18357, "INV_Misc_Book_07", "=q3=Codex of Defense", "=ds=#e20# =q17=#c9#" },
+		{ 0,"","","" },
+		{ 18333,"INV_Misc_Book_04","=q2=Libram of Focus","=ds=#e20#" },
+		{ 18334,"INV_Misc_Book_11","=q2=Libram of Protection","=ds=#e20#" },
+		{ 18332,"INV_Misc_Book_02","=q2=Libram of Rapidity","=ds=#e20#" },
+		{ 18348,"INV_Sword_01","=q4=Quel'Serrar","=q1=#m4# =ds=#h3#, #w10#" },
+		{ 0,"","","" },
+		{ 18469, "INV_Jewelry_Talisman_10", "=q3=Royal Seal of Eldre'Thalas", "=ds=#s14# =q9=#c5#" },
+		{ 18468, "INV_Jewelry_Talisman_10", "=q3=Royal Seal of Eldre'Thalas", "=ds=#s14# =q10=#c3#" },
+		{ 18467, "INV_Jewelry_Talisman_10", "=q3=Royal Seal of Eldre'Thalas", "=ds=#s14# =q11=#c8#" },
+		{ 18465, "INV_Jewelry_Talisman_10", "=q3=Royal Seal of Eldre'Thalas", "=ds=#s14# =q12=#c6#" },
+		{ 18470, "INV_Jewelry_Talisman_10", "=q3=Royal Seal of Eldre'Thalas", "=ds=#s14# =q13=#c1#" },
+		{ 18473, "INV_Jewelry_Talisman_10", "=q3=Royal Seal of Eldre'Thalas", "=ds=#s14# =q14=#c2#" },
+		{ 18471, "INV_Jewelry_Talisman_10", "=q3=Royal Seal of Eldre'Thalas", "=ds=#s14# =q15=#c7#" },
+		{ 18472, "INV_Jewelry_Talisman_10", "=q3=Royal Seal of Eldre'Thalas", "=ds=#s14# =q16=#c4#" },
+		{ 18466, "INV_Jewelry_Talisman_10", "=q3=Royal Seal of Eldre'Thalas", "=ds=#s14# =q17=#c9#" },
+		{ 0,"","","" },
+	};
+	DMWBooks = {
 		{ 18401,"INV_Misc_Book_11","=q4=Foror's Compendium of Dragon Slaying","=ds=#e20# =q17=#c9#=ds=, =q16=#c4#" },
 		{ 0,"","","" },
 		{ 18362, "INV_Misc_Book_08", "=q3=Holy Bologna: What the Light Won't Tell You", "=ds=#e20# =q9=#c5#" },

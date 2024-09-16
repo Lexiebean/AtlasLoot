@@ -11,6 +11,8 @@ function AtlasLootPvPMenu()
 		getglobal("AtlasLootMenuItem_"..i):Hide();
 		getglobal("AtlasLootMenuItem_"..i).isheader = false;
 	end
+	AtlasLootCharDB.LastBoss = "PVPMENU"
+	AtlasLootCharDB.LastBossText = "PvP Rewards"
 	getglobal("AtlasLootItemsFrame_BACK"):Hide();
 	getglobal("AtlasLootItemsFrame_NEXT"):Hide();
 	getglobal("AtlasLootItemsFrame_PREV"):Hide();
@@ -28,23 +30,23 @@ function AtlasLootPvPMenu()
 	AtlasLootMenuItem_3.lootpage="ABRepMenu";
 	AtlasLootMenuItem_3:Show();
 	--PvP Mounts
-	AtlasLootMenuItem_6_Name:SetText(AL["PvP Mounts"]);
-	AtlasLootMenuItem_6_Extra:SetText("");
-	AtlasLootMenuItem_6_Icon:SetTexture("Interface\\Icons\\Ability_Mount_RidingHorse");
-	AtlasLootMenuItem_6.lootpage="PvPMountsPvP";
+	AtlasLootMenuItem_21_Name:SetText(AL["PvP Mounts"]);
+	AtlasLootMenuItem_21_Extra:SetText(ORANGE..AL["Rank 11"]);
+	AtlasLootMenuItem_21_Icon:SetTexture("Interface\\Icons\\Ability_Mount_RidingHorse");
+	AtlasLootMenuItem_21.lootpage="PvPMountsPvP";
+	AtlasLootMenuItem_21:Show();
+	--PvP Armor Sets
+	AtlasLootMenuItem_6_Name:SetText(AL["PvP Armor Sets"]);
+	AtlasLootMenuItem_6_Extra:SetText(ORANGE..AL["Rank 7-13"]);
+	AtlasLootMenuItem_6_Icon:SetTexture("Interface\\Icons\\INV_Helmet_05");
+	AtlasLootMenuItem_6.lootpage="PVPSET";
 	AtlasLootMenuItem_6:Show();
-	--PvP
-	AtlasLootMenuItem_8_Name:SetText(AL["PvP Armor Sets"]);
-	AtlasLootMenuItem_8_Extra:SetText("|cffFF8400"..AL["Level 60"]);
-	AtlasLootMenuItem_8_Icon:SetTexture("Interface\\Icons\\INV_Helmet_05");
-	AtlasLootMenuItem_8.lootpage="PVPSET";
-	AtlasLootMenuItem_8:Show();
 	--PvP Accessories
-	AtlasLootMenuItem_9_Name:SetText(AL["PvP Accessories"]);
-	AtlasLootMenuItem_9_Extra:SetText("|cffFF8400"..AL["Level 60"]);
-	AtlasLootMenuItem_9_Icon:SetTexture("Interface\\Icons\\INV_Jewelry_Talisman_09");
-	AtlasLootMenuItem_9.lootpage="PvP60Accessories1";
-	AtlasLootMenuItem_9:Show();
+	AtlasLootMenuItem_7_Name:SetText(AL["PvP Accessories"]);
+	AtlasLootMenuItem_7_Extra:SetText(ORANGE..AL["Rank 2-9"]);
+	AtlasLootMenuItem_7_Icon:SetTexture("Interface\\Icons\\INV_Jewelry_Talisman_09");
+	AtlasLootMenuItem_7.lootpage="PvP60Accessories1";
+	AtlasLootMenuItem_7:Show();
 	-- Warsong Gulch Rewards
 	AtlasLootMenuItem_17_Name:SetText(AL["Warsong Gulch"]);
 	AtlasLootMenuItem_17_Extra:SetText("");
@@ -58,11 +60,11 @@ function AtlasLootPvPMenu()
 	AtlasLootMenuItem_18.lootpage="BRRepMenu";
 	AtlasLootMenuItem_18:Show();
 	--Weapons
-	AtlasLootMenuItem_23_Name:SetText(AL["Rank 14 Weapons"]);
-	AtlasLootMenuItem_23_Extra:SetText("|cffFF8400"..AL["Level 60"]);
-	AtlasLootMenuItem_23_Icon:SetTexture("Interface\\Icons\\INV_Sword_11");
-	AtlasLootMenuItem_23.lootpage="PVPWeapons1";
-	AtlasLootMenuItem_23:Show();
+	AtlasLootMenuItem_22_Name:SetText(AL["PvP Weapons"]);
+	AtlasLootMenuItem_22_Extra:SetText(ORANGE..AL["Rank 14"]);
+	AtlasLootMenuItem_22_Icon:SetTexture("Interface\\Icons\\INV_Sword_11");
+	AtlasLootMenuItem_22.lootpage="PVPWeapons1";
+	AtlasLootMenuItem_22:Show();
 	for i = 1, 30, 1 do
 		getglobal("AtlasLootMenuItem_"..i.."_Extra"):Show();
 	end
@@ -183,65 +185,65 @@ function AtlasLootWSGRepMenu()
 	AtlasLootMenuItem_12.lootpage="WSGRepHonored5059";
 	AtlasLootMenuItem_12:Show();
 	--Exalted Header
-	AtlasLootMenuItem_17_Name:SetText(RED..AL["Exalted"]);
+	AtlasLootMenuItem_24_Name:SetText(RED..AL["Exalted"]);
+	AtlasLootMenuItem_24_Extra:SetText("");
+	AtlasLootMenuItem_24_Icon:SetTexture("Interface\\Icons\\INV_Misc_Rune_07");
+	AtlasLootMenuItem_24.isheader = true;
+	AtlasLootMenuItem_24:Show();
+	--Exalted 40-49
+	AtlasLootMenuItem_25_Name:SetText("40-49");
+	AtlasLootMenuItem_25_Extra:SetText("");
+	AtlasLootMenuItem_25_Icon:SetTexture("Interface\\Icons\\INV_Misc_Rune_07");
+	AtlasLootMenuItem_25.lootpage="WSGRepExalted4049";
+	AtlasLootMenuItem_25:Show();
+	--Exalted 50-59
+	AtlasLootMenuItem_26_Name:SetText("50-59");
+	AtlasLootMenuItem_26_Extra:SetText("");
+	AtlasLootMenuItem_26_Icon:SetTexture("Interface\\Icons\\INV_Misc_Rune_07");
+	AtlasLootMenuItem_26.lootpage="WSGRepExalted5059";
+	AtlasLootMenuItem_26:Show();
+	--Exalted 60-60
+	AtlasLootMenuItem_27_Name:SetText("60");
+	AtlasLootMenuItem_27_Extra:SetText("");
+	AtlasLootMenuItem_27_Icon:SetTexture("Interface\\Icons\\INV_Misc_Rune_07");
+	AtlasLootMenuItem_27.lootpage="WSGRepExalted60";
+	AtlasLootMenuItem_27:Show();
+	--Revered Header
+	AtlasLootMenuItem_17_Name:SetText(RED..AL["Revered"]);
 	AtlasLootMenuItem_17_Extra:SetText("");
 	AtlasLootMenuItem_17_Icon:SetTexture("Interface\\Icons\\INV_Misc_Rune_07");
 	AtlasLootMenuItem_17.isheader = true;
 	AtlasLootMenuItem_17:Show();
-	--Exalted 40-49
-	AtlasLootMenuItem_18_Name:SetText("40-49");
+	--Revered 10-19
+	AtlasLootMenuItem_18_Name:SetText("10-19");
 	AtlasLootMenuItem_18_Extra:SetText("");
 	AtlasLootMenuItem_18_Icon:SetTexture("Interface\\Icons\\INV_Misc_Rune_07");
-	AtlasLootMenuItem_18.lootpage="WSGRepExalted4049";
+	AtlasLootMenuItem_18.lootpage="WSGRepRevered1019";
 	AtlasLootMenuItem_18:Show();
-	--Exalted 50-59
-	AtlasLootMenuItem_19_Name:SetText("50-59");
+	--Revered 20-29
+	AtlasLootMenuItem_19_Name:SetText("20-29");
 	AtlasLootMenuItem_19_Extra:SetText("");
 	AtlasLootMenuItem_19_Icon:SetTexture("Interface\\Icons\\INV_Misc_Rune_07");
-	AtlasLootMenuItem_19.lootpage="WSGRepExalted5059";
+	AtlasLootMenuItem_19.lootpage="WSGRepRevered2029";
 	AtlasLootMenuItem_19:Show();
-	--Exalted 60-60
-	AtlasLootMenuItem_20_Name:SetText("60");
+	--Revered 30-39
+	AtlasLootMenuItem_20_Name:SetText("30-39");
 	AtlasLootMenuItem_20_Extra:SetText("");
 	AtlasLootMenuItem_20_Icon:SetTexture("Interface\\Icons\\INV_Misc_Rune_07");
-	AtlasLootMenuItem_20.lootpage="WSGRepExalted60";
+	AtlasLootMenuItem_20.lootpage="WSGRepRevered3039";
 	AtlasLootMenuItem_20:Show();
-	--Revered Header
-	AtlasLootMenuItem_22_Name:SetText(RED..AL["Revered"]);
+	--Revered 40-49
+	AtlasLootMenuItem_21_Name:SetText("40-49");
+	AtlasLootMenuItem_21_Extra:SetText("");
+	AtlasLootMenuItem_21_Icon:SetTexture("Interface\\Icons\\INV_Misc_Rune_07");
+	AtlasLootMenuItem_21.lootpage="WSGRepRevered4049";
+	AtlasLootMenuItem_21:Show();
+	--Revered 50-59
+	AtlasLootMenuItem_22_Name:SetText("50-59");
 	AtlasLootMenuItem_22_Extra:SetText("");
 	AtlasLootMenuItem_22_Icon:SetTexture("Interface\\Icons\\INV_Misc_Rune_07");
-	AtlasLootMenuItem_22.isheader = true;
+	AtlasLootMenuItem_22.lootpage="WSGRepRevered5059";
 	AtlasLootMenuItem_22:Show();
-	--Revered 10-19
-	AtlasLootMenuItem_23_Name:SetText("10-19");
-	AtlasLootMenuItem_23_Extra:SetText("");
-	AtlasLootMenuItem_23_Icon:SetTexture("Interface\\Icons\\INV_Misc_Rune_07");
-	AtlasLootMenuItem_23.lootpage="WSGRepRevered1019";
-	AtlasLootMenuItem_23:Show();
-	--Revered 20-29
-	AtlasLootMenuItem_24_Name:SetText("20-29");
-	AtlasLootMenuItem_24_Extra:SetText("");
-	AtlasLootMenuItem_24_Icon:SetTexture("Interface\\Icons\\INV_Misc_Rune_07");
-	AtlasLootMenuItem_24.lootpage="WSGRepRevered2029";
-	AtlasLootMenuItem_24:Show();
-	--Revered 30-39
-	AtlasLootMenuItem_25_Name:SetText("30-39");
-	AtlasLootMenuItem_25_Extra:SetText("");
-	AtlasLootMenuItem_25_Icon:SetTexture("Interface\\Icons\\INV_Misc_Rune_07");
-	AtlasLootMenuItem_25.lootpage="WSGRepRevered3039";
-	AtlasLootMenuItem_25:Show();
-	--Revered 40-49
-	AtlasLootMenuItem_26_Name:SetText("40-49");
-	AtlasLootMenuItem_26_Extra:SetText("");
-	AtlasLootMenuItem_26_Icon:SetTexture("Interface\\Icons\\INV_Misc_Rune_07");
-	AtlasLootMenuItem_26.lootpage="WSGRepRevered4049";
-	AtlasLootMenuItem_26:Show();
-	--Revered 50-59
-	AtlasLootMenuItem_27_Name:SetText("50-59");
-	AtlasLootMenuItem_27_Extra:SetText("");
-	AtlasLootMenuItem_27_Icon:SetTexture("Interface\\Icons\\INV_Misc_Rune_07");
-	AtlasLootMenuItem_27.lootpage="WSGRepRevered5059";
-	AtlasLootMenuItem_27:Show();
 	for i = 1, 30, 1 do
 		getglobal("AtlasLootMenuItem_"..i.."_Extra"):Show();
 	end
@@ -305,47 +307,47 @@ function AtlasLootABRepMenu()
 	AtlasLootMenuItem_9.lootpage="ABRepHonored5059";
 	AtlasLootMenuItem_9:Show();
 	--Exalted Header
-	AtlasLootMenuItem_17_Name:SetText(RED..AL["Exalted"]);
+	AtlasLootMenuItem_23_Name:SetText(RED..AL["Exalted"]);
+	AtlasLootMenuItem_23_Extra:SetText("");
+	AtlasLootMenuItem_23_Icon:SetTexture("Interface\\Icons\\INV_Jewelry_Amulet_07");
+	AtlasLootMenuItem_23.isheader = true;
+	AtlasLootMenuItem_23:Show();
+	--Exalted
+	AtlasLootMenuItem_24_Name:SetText("60");
+	AtlasLootMenuItem_24_Extra:SetText("");
+	AtlasLootMenuItem_24_Icon:SetTexture("Interface\\Icons\\INV_Jewelry_Amulet_07");
+	AtlasLootMenuItem_24.lootpage="ABRepExalted";
+	AtlasLootMenuItem_24:Show();
+	--Revered Header
+	AtlasLootMenuItem_17_Name:SetText(RED..AL["Revered"]);
 	AtlasLootMenuItem_17_Extra:SetText("");
 	AtlasLootMenuItem_17_Icon:SetTexture("Interface\\Icons\\INV_Jewelry_Amulet_07");
 	AtlasLootMenuItem_17.isheader = true;
 	AtlasLootMenuItem_17:Show();
-	--Exalted
-	AtlasLootMenuItem_18_Name:SetText("60");
+	--Revered 20-29
+	AtlasLootMenuItem_18_Name:SetText("20-29");
 	AtlasLootMenuItem_18_Extra:SetText("");
 	AtlasLootMenuItem_18_Icon:SetTexture("Interface\\Icons\\INV_Jewelry_Amulet_07");
-	AtlasLootMenuItem_18.lootpage="ABRepExalted";
+	AtlasLootMenuItem_18.lootpage="ABRepRevered2029";
 	AtlasLootMenuItem_18:Show();
-	--Revered Header
-	AtlasLootMenuItem_20_Name:SetText(RED..AL["Revered"]);
+	--Revered 30-39
+	AtlasLootMenuItem_19_Name:SetText("30-39");
+	AtlasLootMenuItem_19_Extra:SetText("");
+	AtlasLootMenuItem_19_Icon:SetTexture("Interface\\Icons\\INV_Jewelry_Amulet_07");
+	AtlasLootMenuItem_19.lootpage="ABRepRevered3039";
+	AtlasLootMenuItem_19:Show();
+	--Revered 40-49
+	AtlasLootMenuItem_20_Name:SetText("40-49");
 	AtlasLootMenuItem_20_Extra:SetText("");
 	AtlasLootMenuItem_20_Icon:SetTexture("Interface\\Icons\\INV_Jewelry_Amulet_07");
-	AtlasLootMenuItem_20.isheader = true;
+	AtlasLootMenuItem_20.lootpage="ABRepRevered4049";
 	AtlasLootMenuItem_20:Show();
-	--Revered 20-29
-	AtlasLootMenuItem_21_Name:SetText("20-29");
+	--Revered 50-59
+	AtlasLootMenuItem_21_Name:SetText("50-59");
 	AtlasLootMenuItem_21_Extra:SetText("");
 	AtlasLootMenuItem_21_Icon:SetTexture("Interface\\Icons\\INV_Jewelry_Amulet_07");
-	AtlasLootMenuItem_21.lootpage="ABRepRevered2029";
-	AtlasLootMenuItem_21:Show();
-	--Revered 30-39
-	AtlasLootMenuItem_22_Name:SetText("30-39");
-	AtlasLootMenuItem_22_Extra:SetText("");
-	AtlasLootMenuItem_22_Icon:SetTexture("Interface\\Icons\\INV_Jewelry_Amulet_07");
-	AtlasLootMenuItem_22.lootpage="ABRepRevered3039";
-	AtlasLootMenuItem_22:Show();
-	--Revered 40-49
-	AtlasLootMenuItem_23_Name:SetText("40-49");
-	AtlasLootMenuItem_23_Extra:SetText("");
-	AtlasLootMenuItem_23_Icon:SetTexture("Interface\\Icons\\INV_Jewelry_Amulet_07");
-	AtlasLootMenuItem_23.lootpage="ABRepRevered4049";
-	AtlasLootMenuItem_23:Show();
-	--Revered 50-59
-	AtlasLootMenuItem_24_Name:SetText("50-59");
-	AtlasLootMenuItem_24_Extra:SetText("");
-	AtlasLootMenuItem_24_Icon:SetTexture("Interface\\Icons\\INV_Jewelry_Amulet_07");
-	AtlasLootMenuItem_24.lootpage="ABRepRevered5059";
-	AtlasLootMenuItem_24:Show();							 
+	AtlasLootMenuItem_21.lootpage="ABRepRevered5059";
+	AtlasLootMenuItem_21:Show();							 
 	for i = 1, 30, 1 do
 		getglobal("AtlasLootMenuItem_"..i.."_Extra"):Show();
 	end

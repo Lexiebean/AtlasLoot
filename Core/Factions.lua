@@ -10,6 +10,8 @@ function AtlasLootRepMenu()
 		getglobal("AtlasLootMenuItem_"..i):Hide();
 		getglobal("AtlasLootMenuItem_"..i).isheader = false;
 	end
+	AtlasLootCharDB.LastBoss = "REPMENU"
+	AtlasLootCharDB.LastBossText = "Factions"
 	getglobal("AtlasLootItemsFrame_NEXT"):Hide();
 	getglobal("AtlasLootItemsFrame_PREV"):Hide();
 	getglobal("AtlasLootItemsFrame_BACK"):Hide();
@@ -35,7 +37,7 @@ function AtlasLootRepMenu()
 	--Cenarion Hold
 	AtlasLootMenuItem_17_Name:SetText(AL["Cenarion Circle"]);
 	AtlasLootMenuItem_17_Extra:SetText("");
-	AtlasLootMenuItem_17_Icon:SetTexture("Interface\\Icons\\INV_Chest_Plate07");
+	AtlasLootMenuItem_17_Icon:SetTexture("Interface\\Icons\\Spell_Nature_HealingTouch");
 	AtlasLootMenuItem_17.lootpage="Cenarion1";
 	AtlasLootMenuItem_17:Show();
 	--Darkmoon Faire
@@ -44,12 +46,6 @@ function AtlasLootRepMenu()
 	AtlasLootMenuItem_3_Icon:SetTexture("Interface\\Icons\\INV_Misc_Ticket_Tarot_Maelstrom_01");
 	AtlasLootMenuItem_3.lootpage="Darkmoon";
 	AtlasLootMenuItem_3:Show();
-	--The Defilers
-	AtlasLootMenuItem_23_Name:SetText(AL["The Defilers"]);
-	AtlasLootMenuItem_23_Extra:SetText("|cffFF0000"..AL["Horde"]);
-	AtlasLootMenuItem_23_Icon:SetTexture("Interface\\Icons\\INV_Jewelry_Amulet_07");
-	AtlasLootMenuItem_23.lootpage="Defilers";
-	AtlasLootMenuItem_23:Show();
 	--Frostwolf Clan
 	AtlasLootMenuItem_24_Name:SetText(AL["Frostwolf Clan"]);
 	AtlasLootMenuItem_24_Extra:SetText("|cffFF0000"..AL["Horde"]);
@@ -65,27 +61,33 @@ function AtlasLootRepMenu()
 	--Hydraxian Waterlords
 	AtlasLootMenuItem_4_Name:SetText(AL["Hydraxian Waterlords"]);
 	AtlasLootMenuItem_4_Extra:SetText("");
-	AtlasLootMenuItem_4_Icon:SetTexture("Interface\\Icons\\Spell_Frost_FrostArmor");
+	AtlasLootMenuItem_4_Icon:SetTexture("Interface\\Icons\\Spell_Frost_SummonWaterElemental_2");
 	AtlasLootMenuItem_4.lootpage="WaterLords1";
 	AtlasLootMenuItem_4:Show();
-	--The League of Arathor
-	AtlasLootMenuItem_8_Name:SetText(AL["The League of Arathor"]);
-	AtlasLootMenuItem_8_Extra:SetText("|cff2773ff"..AL["Alliance"]);
-	AtlasLootMenuItem_8_Icon:SetTexture("Interface\\Icons\\INV_Jewelry_Amulet_07");
-	AtlasLootMenuItem_8.lootpage="LeagueofArathor";
-	AtlasLootMenuItem_8:Show();
 	--Magram Clan Centaur
 	AtlasLootMenuItem_19_Name:SetText(AL["Magram Clan Centaur"]);
 	AtlasLootMenuItem_19_Extra:SetText("");
 	AtlasLootMenuItem_19_Icon:SetTexture("Interface\\Icons\\INV_Misc_Head_Centaur_01");
 	AtlasLootMenuItem_19.lootpage="MagramClan1";
 	AtlasLootMenuItem_19:Show();
+	--Wildhammer Clan
+	AtlasLootMenuItem_7_Name:SetText(AL["Wildhammer Clan"]);
+	AtlasLootMenuItem_7_Extra:SetText("|cff2773ff"..AL["Alliance"]);
+	AtlasLootMenuItem_7_Icon:SetTexture("Interface\\Icons\\Ability_Hunter_EagleEye");
+	AtlasLootMenuItem_7.lootpage="Wildhammer";
+	AtlasLootMenuItem_7:Show();
 	--Stormpike Guard
 	AtlasLootMenuItem_9_Name:SetText(AL["Stormpike Guard"]);
 	AtlasLootMenuItem_9_Extra:SetText("|cff2773ff"..AL["Alliance"]);
 	AtlasLootMenuItem_9_Icon:SetTexture("Interface\\Icons\\INV_Jewelry_StormPikeTrinket_01");
 	AtlasLootMenuItem_9.lootpage="Stormpike1";
 	AtlasLootMenuItem_9:Show();
+	--Dalaran
+	AtlasLootMenuItem_10_Name:SetText(AL["Dalaran"]);
+	AtlasLootMenuItem_10_Extra:SetText("|cff2773ff"..AL["Alliance"]);
+	AtlasLootMenuItem_10_Icon:SetTexture("Interface\\Icons\\Spell_Holy_MagicalSentry");
+	AtlasLootMenuItem_10.lootpage="Dalaran";
+	AtlasLootMenuItem_10:Show();
 	--Thorium Brotherhood
 	AtlasLootMenuItem_5_Name:SetText(AL["Thorium Brotherhood"]);
 	AtlasLootMenuItem_5_Extra:SetText("");
@@ -105,18 +107,29 @@ function AtlasLootRepMenu()
 	AtlasLootMenuItem_6.lootpage="Wintersaber1";
 	AtlasLootMenuItem_6:Show();
 	--Zandalar Tribe
-	AtlasLootMenuItem_23_Name:SetText(AL["Zandalar Tribe"]);
-	AtlasLootMenuItem_23_Extra:SetText("");
-	AtlasLootMenuItem_23_Icon:SetTexture("Interface\\Icons\\INV_Misc_Coin_08");
-	AtlasLootMenuItem_23.lootpage="Zandalar1";
-	AtlasLootMenuItem_23:Show();
-
+	AtlasLootMenuItem_21_Name:SetText(AL["Zandalar Tribe"]);
+	AtlasLootMenuItem_21_Extra:SetText("");
+	AtlasLootMenuItem_21_Icon:SetTexture("Interface\\Icons\\INV_Misc_Coin_08");
+	AtlasLootMenuItem_21.lootpage="Zandalar1";
+	AtlasLootMenuItem_21:Show();
+	--Wardens of Time
+	AtlasLootMenuItem_22_Name:SetText(AL["Wardens of Time"]);
+	AtlasLootMenuItem_22_Extra:SetText("");
+	AtlasLootMenuItem_22_Icon:SetTexture("Interface\\Icons\\INV_Misc_Head_Dragon_Bronze");
+	AtlasLootMenuItem_22.lootpage="Wardens1";
+	AtlasLootMenuItem_22:Show();
 	--helf
 	AtlasLootMenuItem_11_Name:SetText(AL["Silvermoon Remnant"]);
 	AtlasLootMenuItem_11_Extra:SetText("|cff2773ff"..AL["Alliance"]);
-	AtlasLootMenuItem_11_Icon:SetTexture("Interface\\Icons\\INV_Staff_13");
+	AtlasLootMenuItem_11_Icon:SetTexture("Interface\\Icons\\inv_misc_tournaments_symbol_bloodelf");
 	AtlasLootMenuItem_11.lootpage="Helf";
 	AtlasLootMenuItem_11:Show();
+	--Darkspear Trolls
+	AtlasLootMenuItem_25_Name:SetText(AL["Darkspear Trolls"]);
+	AtlasLootMenuItem_25_Extra:SetText("|cffFF0000"..AL["Horde"]);
+	AtlasLootMenuItem_25_Icon:SetTexture("Interface\\Icons\\Racial_Troll_Berserk");
+	AtlasLootMenuItem_25.lootpage="DarkspearTrolls";
+	AtlasLootMenuItem_25:Show();
 	--raventusk
 	AtlasLootMenuItem_26_Name:SetText(AL["Revantusk Trolls"]);
 	AtlasLootMenuItem_26_Extra:SetText("|cffFF0000"..AL["Horde"]);
@@ -126,49 +139,49 @@ function AtlasLootRepMenu()
 	--Ironforge
 	AtlasLootMenuItem_12_Name:SetText(AL["Ironforge"]);
 	AtlasLootMenuItem_12_Extra:SetText("|cff2773ff"..AL["Alliance"]);
-	AtlasLootMenuItem_12_Icon:SetTexture("Interface\\Icons\\INV_Staff_13");
+	AtlasLootMenuItem_12_Icon:SetTexture("Interface\\Icons\\Ability_Racial_Avatar");
 	AtlasLootMenuItem_12.lootpage="Ironforge";
 	AtlasLootMenuItem_12:Show();
 		--Darnassus
 	AtlasLootMenuItem_13_Name:SetText(AL["Darnassus"]);
 	AtlasLootMenuItem_13_Extra:SetText("|cff2773ff"..AL["Alliance"]);
-	AtlasLootMenuItem_13_Icon:SetTexture("Interface\\Icons\\INV_Staff_13");
+	AtlasLootMenuItem_13_Icon:SetTexture("Interface\\Icons\\Ability_Racial_ShadowMeld");
 	AtlasLootMenuItem_13.lootpage="Darnassus";
 	AtlasLootMenuItem_13:Show();
 		--Stormwind
 	AtlasLootMenuItem_14_Name:SetText(AL["Stormwind"]);
 	AtlasLootMenuItem_14_Extra:SetText("|cff2773ff"..AL["Alliance"]);
-	AtlasLootMenuItem_14_Icon:SetTexture("Interface\\Icons\\INV_Staff_13");
+	AtlasLootMenuItem_14_Icon:SetTexture("Interface\\Icons\\INV_BannerPVP_02");
 	AtlasLootMenuItem_14.lootpage="Stormwind";
 	AtlasLootMenuItem_14:Show();
 		--Gnomeregan Exiles
 	AtlasLootMenuItem_15_Name:SetText(AL["Gnomeregan Exiles"]);
 	AtlasLootMenuItem_15_Extra:SetText("|cff2773ff"..AL["Alliance"]);
-	AtlasLootMenuItem_15_Icon:SetTexture("Interface\\Icons\\INV_Staff_13");
+	AtlasLootMenuItem_15_Icon:SetTexture("Interface\\Icons\\INV_Gizmo_02");
 	AtlasLootMenuItem_15.lootpage="GnomereganExiles";
 	AtlasLootMenuItem_15:Show();
 		--Durotar Labor Union
 	AtlasLootMenuItem_27_Name:SetText(AL["Durotar Labor Union"]);
 	AtlasLootMenuItem_27_Extra:SetText("|cffFF0000"..AL["Horde"]);
-	AtlasLootMenuItem_27_Icon:SetTexture("Interface\\Icons\\INV_Staff_13");
+	AtlasLootMenuItem_27_Icon:SetTexture("Interface\\Icons\\INV_Misc_Coin_01");
 	AtlasLootMenuItem_27.lootpage="DurotarLaborUnion";
 	AtlasLootMenuItem_27:Show();
 		--Undercity
 	AtlasLootMenuItem_28_Name:SetText(AL["Undercity"]);
 	AtlasLootMenuItem_28_Extra:SetText("|cffFF0000"..AL["Horde"]);
-	AtlasLootMenuItem_28_Icon:SetTexture("Interface\\Icons\\INV_Staff_13");
+	AtlasLootMenuItem_28_Icon:SetTexture("Interface\\Icons\\Spell_Shadow_RaiseDead");
 	AtlasLootMenuItem_28.lootpage="Undercity";
 	AtlasLootMenuItem_28:Show();
 		--Orgrimmar
 	AtlasLootMenuItem_29_Name:SetText(AL["Orgrimmar"]);
 	AtlasLootMenuItem_29_Extra:SetText("|cffFF0000"..AL["Horde"]);
-	AtlasLootMenuItem_29_Icon:SetTexture("Interface\\Icons\\INV_Staff_13");
+	AtlasLootMenuItem_29_Icon:SetTexture("Interface\\Icons\\INV_BannerPVP_01");
 	AtlasLootMenuItem_29.lootpage="Orgrimmar";
 	AtlasLootMenuItem_29:Show();
 		--Thunder Bluff
 	AtlasLootMenuItem_30_Name:SetText(AL["Thunder Bluff"]);
 	AtlasLootMenuItem_30_Extra:SetText("|cffFF0000"..AL["Horde"]);
-	AtlasLootMenuItem_30_Icon:SetTexture("Interface\\Icons\\INV_Staff_13");
+	AtlasLootMenuItem_30_Icon:SetTexture("Interface\\Icons\\INV_Misc_Foot_Centaur");
 	AtlasLootMenuItem_30.lootpage="ThunderBluff";
 	AtlasLootMenuItem_30:Show();
 

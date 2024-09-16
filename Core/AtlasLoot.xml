@@ -11,6 +11,8 @@
 	<Script file="AtlasLoot.lua"/>
 	<Script file="WishList.lua"/>
 	<Script file="Search.lua"/>
+	<Script file="WorldBoss.lua"/>
+	<Script file="Dungeons.lua"/>
 
 	<Button name="AtlasLootDefaultFrameButtonTemplate" inherits="OptionsButtonTemplate" virtual="true">
 		<Size>
@@ -18,7 +20,7 @@
 		</Size>
 	</Button>
 
-	<Frame name="AtlasLootDefaultFrame" toplevel="true" frameStrata="MEDIUM" movable="true" enableMouse="true" hidden="true" parent="UIParent" enableKeyboard="true">
+	<Frame name="AtlasLootDefaultFrame" toplevel="true" frameStrata="HIGH" movable="true" enableMouseClicks="true" hidden="true" parent="UIParent" enableKeyboard="true">
 		<Size>
 			<AbsDimension x="600" y="690"/>
 		</Size>
@@ -69,6 +71,7 @@
 							AtlasLootSearchBox:ClearFocus();
 						end
 						Atlas_Toggle();
+						CloseDropDownMenus();
 					</OnClick>
 					<OnShow>
 						local AL = AceLibrary("AceLocale-2.2"):new("AtlasLoot");
@@ -93,6 +96,7 @@
 				<Scripts>
 					<OnClick>
 						AtlasLootOptions_Toggle();
+						CloseDropDownMenus();
 					</OnClick>
 					<OnShow>
 						local AL = AceLibrary("AceLocale-2.2"):new("AtlasLoot");
@@ -330,6 +334,7 @@
 							GameTooltip:Show();
 						end
 					</OnEnter>
+					
 					<OnLeave>
 						if(GameTooltip:IsVisible()) then
 							GameTooltip:Hide();
@@ -399,6 +404,7 @@
 					<OnClick>
 						AtlasLoot:Search(AtlasLootDefaultFrameSearchBox:GetText());
 						AtlasLootDefaultFrameSearchBox:ClearFocus();
+						CloseDropDownMenus();
 					</OnClick>
 				</Scripts>
 			</Button>
@@ -446,6 +452,7 @@
 					<OnClick>
 						AtlasLootDefaultFrameSearchBox:SetText("");
 						AtlasLootDefaultFrameSearchBox:ClearFocus();
+						CloseDropDownMenus();
 					</OnClick>
 				</Scripts>
 			</Button>
@@ -468,6 +475,7 @@
 					</OnShow>
 					<OnClick>
 						AtlasLoot:ShowSearchResult();
+						CloseDropDownMenus();
 					</OnClick>
 				</Scripts>
 			</Button>
@@ -485,6 +493,7 @@
 				<Scripts>
 					<OnClick>
 						AtlasLoot_ShowWishList();
+						CloseDropDownMenus();
 					</OnClick>
 					<OnShow>
 						local AL = AceLibrary("AceLocale-2.2"):new("AtlasLoot");
@@ -556,6 +565,9 @@
 				local AL = AceLibrary("AceLocale-2.2"):new("AtlasLoot");
 				getglobal("AtlasLootDefaultFrame_Notice"):SetText(AL["NoticeFrame"]);
 			</OnLoad>
+			<OnMouseUp>
+				CloseDropDownMenus();
+			</OnMouseUp>
 			<OnShow>
 				AtlasLootDefaultFrame_OnShow();
 			</OnShow>
@@ -647,6 +659,7 @@
 		<Scripts>
 			<OnClick>
 				AtlasLoot_NavButton_OnClick();
+				CloseDropDownMenus();
 			</OnClick>
 			<OnShow>
 				this:SetFrameLevel( (this:GetParent()):GetFrameLevel() + 1 );
@@ -830,6 +843,7 @@
 			</OnLeave>
 			<OnClick>
 				AtlasLootItem_OnClick(arg1);
+				CloseDropDownMenus();
 			</OnClick>
 			<OnShow>
 				this:SetFrameLevel( (this:GetParent()):GetFrameLevel() + 1 );
@@ -1173,6 +1187,7 @@
 				<Scripts>
 					<OnClick>
 						AtlasLoot_NavButton_OnClick()
+						CloseDropDownMenus();
 					</OnClick>
 					<OnShow>
 						this:SetFrameLevel( (this:GetParent()):GetFrameLevel() + 1 );
@@ -1213,6 +1228,7 @@
 					<OnClick>
 						GameTooltip:Hide();
 						AtlasLoot_QueryLootPage();
+						CloseDropDownMenus();
 					</OnClick>
 				</Scripts>
 			</Button>
@@ -1256,6 +1272,7 @@
 				<Scripts>
 					<OnClick>
 						AtlasLoot_NavButton_OnClick();
+						CloseDropDownMenus();
 					</OnClick>
 					<OnShow>
 						this:SetFrameLevel( (this:GetParent()):GetFrameLevel() + 1 );

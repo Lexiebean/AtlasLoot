@@ -325,6 +325,7 @@ function AtlasLoot_FixText(text)
 	text = gsub(text, "#craftt3#", AL["Diviner's Garments"]);
 	text = gsub(text, "#craftt4#", AL["Pillager's Garb"]);
 	text = gsub(text, "#craftt5#", AL["Bloodvine Garb"]);
+	text = gsub(text, "#craftt6#", AL["Mooncloth Regalia"]);
 
 	-- Leatherworking Crafted Sets
 	text = gsub(text, "#craftlwl7#", AL["Grifter's Armor"]);

@@ -232,7 +232,7 @@ function AtlasLoot_CategorizeWishList(wlTable)
 
 	for _, v in pairs(wlTable) do
 		if v[5] and v[5] ~= "" then
-			local dataID = strsplit("|", v[5]);
+			local dataID = AtlasLoot_strsplit("|", v[5]);
 			-- Build subheading table
 			if not subheadings[dataID] then
 				subheadings[dataID] = AtlasLoot_GetWishListSubheadingBoss(dataID);
@@ -261,9 +261,9 @@ function AtlasLoot_CategorizeWishList(wlTable)
 		local box = k or "Unknown"
 		local cat = categories[k][1][5] or "Unknown"
 		print("box: "..box.." - cat: "..cat)
-		table.insert(result, { 0, "INV_Box_01", "=q6="..box, "=q0="..GetLootTableParent(strsplit("|", cat)) });]]--
+		table.insert(result, { 0, "INV_Box_01", "=q6="..box, "=q0="..GetLootTableParent(AtlasLoot_strsplit("|", cat)) });]]--
 		
-		table.insert(result, { 0, "INV_Box_01", "=q6="..k, "=q0="..GetLootTableParent(strsplit("|", categories[k][1][5])) });
+		table.insert(result, { 0, "INV_Box_01", "=q6="..k, "=q0="..GetLootTableParent(AtlasLoot_strsplit("|", categories[k][1][5])) });
 		-- Sort first then add items
 		table.sort(v, AtlasLoot_WishListSortCheck); -- not works?
 		for i = 1, table.getn(v) do table.insert(result, v[i]) end

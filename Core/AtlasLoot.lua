@@ -1351,10 +1351,11 @@ function AtlasLoot_ShowItemsFrame(dataID, dataSource, boss, pFrame)
 						priceicon5:Show();
 					end
 				end
-				--Set prices for items, up to 5 different currencies can be used in combination
+				itemButton.droprate = nil;
 				if (dataID == "SearchResult" or dataID == "WishList") and dataSource[dataID][i][5] then
 					local wishDataID, wishDataSource = strsplit("|", dataSource[dataID][i][5])
 					if wishDataSource == "AtlasLootRepItems" then
+						--Set prices for items, up to 5 different currencies can be used in combination
 						if wishDataID and AtlasLoot_IsLootTableAvailable(wishDataID) then
 							for _, v in ipairs(AtlasLoot_Data[wishDataSource][wishDataID]) do
 								if dataSource[dataID][i][1] == v[1] then
@@ -1404,6 +1405,19 @@ function AtlasLoot_ShowItemsFrame(dataID, dataSource, boss, pFrame)
 										end
 									end
 									break;
+								end
+							end
+						end
+					end
+
+					if wishDataSource == "AtlasLootItems" then
+						--Set drop rate
+						if wishDataID and AtlasLoot_IsLootTableAvailable(wishDataID) then
+							for _, v in ipairs(AtlasLoot_Data[wishDataSource][wishDataID]) do
+								if dataSource[dataID][i][1] == v[1] then
+									if v[5] then
+										itemButton.droprate = v[5]
+									end
 								end
 							end
 						end
@@ -1464,7 +1478,6 @@ function AtlasLoot_ShowItemsFrame(dataID, dataSource, boss, pFrame)
 						end
 					end
 				end
-				itemButton.droprate = nil;
 				if dataID == "SearchResult" or dataID == "WishList" then
 					itemButton.sourcePage = dataSource[dataID][i][5];
 				else

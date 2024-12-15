@@ -95,6 +95,7 @@ local WHITE = "|cffFFFFFF";
 local GREEN = "|cff1eff00";
 local PURPLE = "|cff9F3FFF";
 local BLUE = "|cff0070dd";
+local LIGHTBLUE = "|cff27c0ea";
 local ORANGE = "|cffFF8400";
 local DEFAULT = "|cffFFd200";
 
@@ -271,10 +272,65 @@ function AtlasLoot_OnEvent(event)
 	--Addons all loaded
 	if(event == "VARIABLES_LOADED") then
 		AtlasLoot_OnVariablesLoaded();
+		AtlasLoot_BuildItemNameMapping()
+		AtlasLoot_HookGameTooltip();
 	--Taint errors
 	elseif(arg1 == "AtlasLoot") then
 		--Junk command to suppress taint message
 		local i=3;
+	end
+end
+
+function AtlasLoot_BuildItemNameMapping()
+	AtlasLoot_ItemNameMapping = {}
+	local bossIdMapping = {}
+	for dungeon, bosses in pairs(AtlasLoot_TableNamesBoss) do
+		for boss, bossInfo in pairs(bosses) do
+			if type(bossInfo) == "table" then
+				bossIdMapping[boss] = { dungeon, bossInfo[1] }
+			end
+		end
+	end
+
+	for boss, drops in pairs(AtlasLoot_Data["AtlasLootItems"]) do
+		for _, loot in pairs(drops) do
+			if (loot[3] and loot[3] ~= "" and bossIdMapping[boss]) then
+				local itemName = AtlasLoot_removeFormatting(loot[3])
+				local dungeon = bossIdMapping[boss][1]
+				local bossName= bossIdMapping[boss][2]
+
+				local dropRate = "??%"
+				if loot[5] then
+					dropRate = loot[5]
+				end
+				AtlasLoot_ItemNameMapping[itemName] = {dungeon, bossName, dropRate}
+			end
+		end
+	end
+end
+
+function AtlasLoot_HookGameTooltip()
+	AtlasLoot_GT_OnShow_Orig = GameTooltip:GetScript("OnShow")
+	GameTooltip:SetScript( "OnShow", AtlasLoot_GameTooltip_OnShow )
+end
+
+function AtlasLoot_GameTooltip_OnShow()
+	local firstline = getglobal("GameTooltipTextLeft1");
+
+	if  UnitCreatureType("mouseover") then
+		return
+	end
+
+	local itemName = firstline:GetText()
+	local itemInfo = AtlasLoot_ItemNameMapping[itemName]
+	if (itemInfo) then
+		GameTooltip:AddLine(GREEN.."AtlasLoot:")
+		GameTooltip:AddLine(" "..LIGHTBLUE..itemInfo[1].." - "..itemInfo[2].." ("..itemInfo[3]..")")
+	end
+
+	-- call original WoW event for GameTooltip:OnShow()
+	if AtlasLoot_GT_OnShow_Orig then
+		MI2_GT_OnShow_Orig(event)
 	end
 end
 
@@ -2146,6 +2202,13 @@ function AtlasLootMinimapButton_SetPosition(v)
 	end
 	AtlasLootCharDB.MinimapButtonPosition = v;
 	AtlasLootMinimapButton_UpdatePosition();
+end
+
+function AtlasLoot_removeFormatting(text)
+	unformatted = gsub(text, "=q%d=", "")
+	unformatted = gsub(unformatted, "=ds=", "")
+
+	return unformatted
 end
 
 function strsplit(delim, str, maxNb, onlyLast)
